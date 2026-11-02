@@ -7,7 +7,7 @@ The documentation site for [mr-rijal/laravel-sms](https://github.com/mr-rijal/la
 ```bash
 npm install
 npm run dev       # http://localhost:5173, reloads as you edit
-npm run build     # production build in .vitepress/dist (fails on dead links)
+npm run build     # production build in dist/ (fails on dead links)
 npm run preview   # serve the production build
 ```
 

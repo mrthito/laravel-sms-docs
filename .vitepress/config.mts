@@ -270,7 +270,9 @@ export default withMermaid(
     title: 'Laravel SMS',
     cleanUrls: true,
     lastUpdated: true,
-    srcExclude: ['README.md'],
+    srcExclude: ['README.md', 'dist/**'],
+    // Build into a plain folder: some static hosts refuse to serve hidden folders like .vitepress/.
+    outDir: 'dist',
 
     vite: {
       // Mermaid ships some CommonJS dependencies that Vite must pre-bundle in dev.
