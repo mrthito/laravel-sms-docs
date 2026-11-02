@@ -19,11 +19,33 @@
 ## What's up to you
 
 - **Keep credentials in your environment** or a secrets manager, never in source control. Rotate them if they leak.
-- **Rate-limit the endpoints that send SMS.** A login form that texts a code is an easy target for "SMS pumping" fraud, where attackers trigger messages to premium numbers at your expense. Use Laravel's `RateLimiter` per phone number and per IP address.
+- **Rate-limit the endpoints that send SMS.** A login form that texts a code is an easy target for "SMS pumping" fraud, where attackers trigger messages to premium numbers at your expense. Limit by phone number and by IP address (see below).
 - **Keep webhooks off** until you need them, and serve them over HTTPS.
 - **Don't use the `log` driver in production.** It writes full message text, including any codes, to your log files.
 - **Protect your `APP_KEY`.** It decrypts queued messages. When you rotate it, list the old key in `APP_PREVIOUS_KEYS` so jobs already on the queue can still be read.
 - **Keep Laravel and the package up to date.** Laravel 11 no longer receives security fixes.
+
+## Rate limiting login codes {#rate-limiting-login-codes}
+
+Laravel's `RateLimiter` makes the per-number limit a few lines:
+
+```php
+use Illuminate\Support\Facades\RateLimiter;
+use MrRijal\LaravelSms\Facades\Sms;
+
+$sent = RateLimiter::attempt(
+    key: 'sms-code:'.$request->string('phone'),
+    maxAttempts: 3,
+    callback: fn () => Sms::to($request->string('phone'))->message("Your code is {$code}")->sendNow(),
+    decaySeconds: 600,
+);
+
+if (! $sent) {
+    return back()->withErrors(['phone' => 'Too many codes requested. Try again in a few minutes.']);
+}
+```
+
+Add a second limit per IP address with the `throttle` middleware on the route, for example `->middleware('throttle:10,1')`.
 
 ## Reporting a vulnerability
 

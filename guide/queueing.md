@@ -26,6 +26,18 @@ SMS_QUEUE_CONNECTION=redis
 SMS_QUEUE_NAME=sms
 ```
 
+On Laravel 13 you can route the package's job from `AppServiceProvider` instead, next to your other queue routing:
+
+```php
+use Illuminate\Support\Facades\Queue;
+use MrRijal\LaravelSms\Jobs\SendSmsJob;
+
+public function boot(): void
+{
+    Queue::route(SendSmsJob::class, connection: 'redis', queue: 'sms');
+}
+```
+
 A dedicated queue keeps a large batch of marketing messages from delaying your password resets. Run a worker for it:
 
 ```bash
@@ -35,6 +47,18 @@ php artisan queue:work redis --queue=sms
 ## One job per recipient
 
 A message to 500 people becomes 500 small jobs, not one big one. If the provider rejects the 312th number, only that job fails and retries; the other 499 recipients are never sent the message again.
+
+```mermaid
+flowchart TB
+    S["sendLater()<br/><small>500 recipients</small>"] --> J1["Job · +1555…0001"]
+    S --> J2["Job · +1555…0002"]
+    S --> J3["Job · +1555…0312"]
+    S --> J4["… 497 more"]
+    J1 --> OK1["Sent"]
+    J2 --> OK2["Sent"]
+    J3 --> F["Rejected"] --> RT["Retry this job only"]
+    J4 --> OK3["Sent"]
+```
 
 Each job is retried up to three times by default, waiting 10, 30 and then 60 seconds between attempts:
 

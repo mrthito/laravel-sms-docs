@@ -115,9 +115,10 @@ If the provider reports each recipient separately, throw a `DeliveryException` w
 
 ## Registering at runtime
 
-For drivers that need dependencies from the container, register a factory in a service provider:
+For drivers that need dependencies from the container, register a factory in `AppServiceProvider`:
 
 ```php
+// app/Providers/AppServiceProvider.php
 use MrRijal\LaravelSms\Facades\Sms;
 
 public function boot(): void

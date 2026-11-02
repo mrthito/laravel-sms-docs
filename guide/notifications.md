@@ -40,7 +40,37 @@ public function toSms(object $notifiable): string
 }
 ```
 
-To queue SMS notifications, implement `ShouldQueue` on the notification, as with any Laravel notification.
+To queue SMS notifications, implement `ShouldQueue` on the notification, as with any Laravel notification. Laravel creates one job per notifiable and channel, so the SMS and the email retry independently.
+
+Send SMS jobs to their own queue with `viaQueues()`:
+
+```php
+public function viaQueues(): array
+{
+    return [
+        'mail' => 'default',
+        'sms' => 'sms',
+    ];
+}
+```
+
+On Laravel 13, retry limits can be declared with attributes:
+
+```php
+use Illuminate\Queue\Attributes\Tries;
+
+#[Tries(3)]
+class OrderShipped extends Notification implements ShouldQueue
+{
+    // …
+}
+```
+
+If the notification is sent inside a database transaction, chain `afterCommit()` so the text never goes out for an order that was rolled back:
+
+```php
+$user->notify((new OrderShipped($order))->afterCommit());
+```
 
 ## Routing to a phone number
 
@@ -99,7 +129,7 @@ class User extends Authenticatable
 {
     use HasSms, Notifiable;
 
-    public function routeNotificationForSms(): string
+    public function routeNotificationForSms(?Notification $notification = null): string
     {
         return $this->phone;
     }
@@ -109,4 +139,4 @@ $user->sms('Your order has shipped.');
 $user->smsTemplate('otp', ['code' => 4821]);
 ```
 
-Both send immediately and return the `SmsResult`.
+Both send immediately and return the `SmsResult`. With the trait, keep the `$notification` parameter optional, as above, so the same method serves notifications and the helpers.

@@ -118,11 +118,14 @@ Sms::sendNow($message);
 Give recurring messages a name of their own:
 
 ```php
-// In a service provider's boot() method
-Sms::macro('sendOtp', function (string $phone, int $code) {
-    return $this->to($phone)->template('otp', ['code' => $code])->sendNow();
-});
+// app/Providers/AppServiceProvider.php
+public function boot(): void
+{
+    Sms::macro('sendOtp', function (string $phone, int $code) {
+        return $this->to($phone)->template('otp', ['code' => $code])->sendNow();
+    });
+}
 
-// Anywhere
+// Anywhere in your app
 Sms::sendOtp($user->phone, 4821);
 ```

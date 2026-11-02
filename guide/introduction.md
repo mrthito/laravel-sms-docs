@@ -17,16 +17,14 @@ This package is that plumbing, written once and tested on every supported PHP an
 
 ## How a message travels
 
-```text
-Sms::to(…)->message(…)         your code
-        │
-   PendingSms                  a fresh message for every send
-        │
-   SmsManager                  picks the provider, fires SmsSending
-        │
-   Driver                      talks to Twilio, Sinch, …
-        │
-   SmsResult                   message IDs, fires SmsSent
+```mermaid
+flowchart TB
+    A["Sms::to(…)->message(…)"] --> B["PendingSms<br/><small>a fresh message</small>"]
+    B --> C{"SmsManager"}
+    C -- "SmsSending" --> D["Driver<br/><small>Twilio, Sinch, …</small>"]
+    D --> E(("Provider API"))
+    E --> F["SmsResult<br/><small>message IDs</small>"]
+    F -- "SmsSent" --> G["Your app"]
 ```
 
 Each call to the facade starts a brand-new message, so nothing leaks between sends, even under Octane or in a long-running queue worker. The manager chooses the provider: the one you asked for, your default, or the next one in a failover chain. The driver turns your message into the provider's HTTP request and its response back into an `SmsResult`.

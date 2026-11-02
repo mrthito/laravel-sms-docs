@@ -23,6 +23,16 @@ Sms::provider('failover')->to($phone)->message('Your code is 4821')->sendNow();
 
 Suppose you send to 100 people. Twilio accepts 98 and rejects two numbers its network can't reach. Failover sends **only those two** to Vonage. The 98 people who already have the message don't get it again.
 
+```mermaid
+flowchart TB
+    M["100 recipients"] --> T["Twilio"]
+    T -- "98 accepted" --> R["SmsResult<br/><small>100 recipients</small>"]
+    T -- "2 rejected" --> V["Vonage"]
+    V -- "2 accepted" --> R
+    V -. "still rejected" .-> S["Sinch"]
+    S -. "or DeliveryException" .-> X["All failover<br/>providers failed"]
+```
+
 ```php
 $result = Sms::provider('failover')->to($hundredNumbers)->message('Hi')->sendNow();
 

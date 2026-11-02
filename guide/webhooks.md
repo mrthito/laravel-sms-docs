@@ -2,6 +2,20 @@
 
 <p class="lead">A send result means the provider accepted your message. Webhooks tell you what happened next: delivered, failed, or a reply from the person you texted.</p>
 
+```mermaid
+sequenceDiagram
+    autonumber
+    participant App as Your app
+    participant P as Provider
+    participant H as Handset
+    App->>P: Send message
+    P-->>App: Accepted · message ID
+    P->>H: Deliver
+    H-->>P: Delivered
+    P->>App: POST /laravel-sms/webhook/{provider} (signed)
+    App->>App: Verify signature, fire SmsWebhookReceived
+```
+
 ## Turning them on
 
 Webhooks are off until you enable them:
@@ -49,16 +63,30 @@ WhatsApp needs **both** values. When you add the webhook in the Meta dashboard, 
 
 ## Handling the reports
 
-Each verified webhook fires `SmsWebhookReceived`:
+Each verified webhook fires `SmsWebhookReceived`. Handle it with a listener in `app/Listeners`, which Laravel discovers automatically:
+
+```bash
+php artisan make:listener UpdateSmsStatus --event="MrRijal\LaravelSms\Events\SmsWebhookReceived"
+```
 
 ```php
+namespace App\Listeners;
+
+use App\Models\SmsLog;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use MrRijal\LaravelSms\Events\SmsWebhookReceived;
 
-Event::listen(function (SmsWebhookReceived $event) {
-    SmsLog::where('provider_id', $event->messageId)
-        ->update(['status' => $event->status]);
-});
+class UpdateSmsStatus implements ShouldQueue
+{
+    public function handle(SmsWebhookReceived $event): void
+    {
+        SmsLog::where('provider_id', $event->messageId)
+            ->update(['status' => $event->status]);
+    }
+}
 ```
+
+Queueing the listener lets the webhook answer the provider immediately. Providers retry webhooks that respond slowly.
 
 | Property | Contents |
 |---|---|

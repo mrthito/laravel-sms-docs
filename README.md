@@ -21,7 +21,24 @@ reference/                configuration, API, Artisan commands, upgrade guide
 .vitepress/config.mts     navigation, sidebar, search
 .vitepress/theme/         brand colours and layout tweaks
 public/                   logo and static files
+zh/ es/ fr/ pt/ ko/ ja/   translations, mirroring the English file layout
 ```
+
+## Languages
+
+English is the source. Each translation lives in its own folder with the same file names: `guide/failover.md` becomes `ja/guide/failover.md`. Navigation labels and interface text for every language live in `.vitepress/config.mts`.
+
+Translations adapt meaning rather than words: they should read as if a native-speaking developer wrote them. When you change an English page, update every translation in the same pull request, or open an issue for the languages you can't write.
+
+Headings in translations carry the English anchor, so links like `/ja/guide/events#cancelling-a-send` work in every language:
+
+```md
+## 送信をキャンセルする {#cancelling-a-send}
+```
+
+## Diagrams
+
+Diagrams are written in [Mermaid](https://mermaid.js.org) inside ```` ```mermaid ```` blocks and follow the site's light and dark themes automatically.
 
 ## Writing style
 
