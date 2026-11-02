@@ -14,7 +14,7 @@ Les modèles sont pris en charge par **[MSG91](/fr/providers/msg91)**, **[WhatsA
 
 ## Envoyer un modèle {#sending-a-template}
 
-Passez l'identifiant du modèle et ses variables :
+Passez l'identifiant du modèle et ses variables :
 
 ```php
 use MrRijal\LaravelSms\Facades\Sms;
@@ -44,7 +44,7 @@ Tous les destinataires partent en une seule requête. Votre identifiant d'expéd
 
 ### WhatsApp {#whatsapp}
 
-L'identifiant est le **nom du modèle**, exactement tel qu'il apparaît dans WhatsApp Manager. Les variables remplissent les emplacements du corps du modèle **dans l'ordre** : la première valeur remplace <code v-pre>{{1}}</code>, la deuxième <code v-pre>{{2}}</code>, et ainsi de suite. Les clés du tableau ne servent qu'à la lisibilité de votre code.
+L'identifiant est le **nom du modèle**, exactement tel qu'il apparaît dans WhatsApp Manager. Les variables remplissent les emplacements du corps du modèle **dans l'ordre** : la première valeur remplace <code v-pre>{{1}}</code>, la deuxième <code v-pre>{{2}}</code>, et ainsi de suite. Les clés du tableau ne servent qu'à la lisibilité de votre code.
 
 ```php
 // Modèle "order_update" : "Hi {{1}}, order {{2}} is on its way."
@@ -62,7 +62,7 @@ Le driver remplit les emplacements du corps. Les modèles comportant un média d
 
 ### Brevo {#brevo}
 
-L'identifiant est l'**identifiant du modèle SMS** dans Brevo, et les variables deviennent les `params` du modèle :
+L'identifiant est l'**identifiant du modèle SMS** dans Brevo, et les variables deviennent les `params` du modèle :
 
 ```php
 Sms::provider('brevo')
@@ -73,7 +73,7 @@ Sms::provider('brevo')
 
 ## Modèles avec texte de repli {#templates-with-a-text-fallback}
 
-Un message peut porter à la fois un modèle **et** du texte brut. Les fournisseurs qui gèrent les modèles envoient le modèle ; tous les autres envoient le texte. Les modèles se combinent ainsi sans risque avec le [basculement](/fr/guide/failover) :
+Un message peut porter à la fois un modèle **et** du texte brut. Les fournisseurs qui gèrent les modèles envoient le modèle ; tous les autres envoient le texte. Les modèles se combinent ainsi sans risque avec le [basculement](/fr/guide/failover) :
 
 ```php
 Sms::provider('failover')                // SMS_FAILOVER_DRIVERS=msg91,twilio
@@ -89,7 +89,7 @@ Un message composé uniquement d'un modèle et adressé à un fournisseur qui n'
 
 ## Sortir les identifiants de modèle du code {#keeping-template-ids-out-of-your-code}
 
-Les identifiants de modèle sont des chaînes opaques, faciles à mal recopier. Une enum typée (backed enum) donne à chaque modèle un nom, l'autocomplétion et un endroit unique où le modifier :
+Les identifiants de modèle sont des chaînes opaques, faciles à mal recopier. Une enum typée (backed enum) donne à chaque modèle un nom, l'autocomplétion et un endroit unique où le modifier :
 
 ```php
 namespace App\Enums;
@@ -113,7 +113,7 @@ Si les identifiants changent d'un environnement à l'autre, rangez-les plutôt d
 
 ## Modèles dans les notifications {#templates-in-notifications}
 
-`toSms()` peut renvoyer un message à base de modèle comme n'importe quel autre :
+`toSms()` peut renvoyer un message à base de modèle comme n'importe quel autre :
 
 ```php
 use App\Enums\SmsTemplate;
@@ -127,7 +127,7 @@ public function toSms(object $notifiable): SmsMessage
 }
 ```
 
-Ou utilisez la notification prête à l'emploi :
+Ou utilisez la notification prête à l'emploi :
 
 ```php
 $user->notify(new SmsNotification(
@@ -139,7 +139,7 @@ $user->notify(new SmsNotification(
 
 ## Tester les messages à base de modèle {#testing-template-messages}
 
-`Sms::fake()` enregistre l'identifiant du modèle et ses variables : vous pouvez donc les vérifier dans vos assertions.
+`Sms::fake()` enregistre l'identifiant du modèle et ses variables : vous pouvez donc les vérifier dans vos assertions.
 
 ```php
 use MrRijal\LaravelSms\SmsMessage;

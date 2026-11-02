@@ -24,7 +24,7 @@ Sms::provider('failover')->to($phone)->message('Your code is 4821')->sendNow();
 Supón que envías a 100 personas. Twilio acepta 98 y rechaza dos números a los que su red no llega. El failover envía **solo esos dos** a Vonage. Las 98 personas que ya tienen el mensaje no lo vuelven a recibir.
 
 ```mermaid
-flowchart LR
+flowchart TB
     M["100 destinatarios"] --> T["Twilio"]
     T -- "98 aceptados" --> R["SmsResult<br/><small>100 destinatarios</small>"]
     T -- "2 rechazados" --> V["Vonage"]

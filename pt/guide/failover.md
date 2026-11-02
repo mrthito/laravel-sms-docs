@@ -2,7 +2,7 @@
 
 <p class="lead">Provedores saem do ar, e alguns funcionam melhor em certos países do que outros. Encadeie vários, e suas mensagens continuam saindo enquanto um deles está fora.</p>
 
-## Failover
+## Failover {#failover}
 
 Liste os provedores em ordem de preferência:
 
@@ -19,7 +19,7 @@ Você também pode usar o failover só em algumas mensagens e deixar o seu padr�
 Sms::provider('failover')->to($phone)->message('Your code is 4821')->sendNow();
 ```
 
-### Só as falhas seguem adiante
+### Só as falhas seguem adiante {#only-the-failures-move-on}
 
 Digamos que você envie para 100 pessoas. A Twilio aceita 98 e recusa dois números que a rede dela não alcança. O failover envia **só esses dois** para a Vonage. As 98 pessoas que já receberam a mensagem não a recebem de novo.
 
@@ -40,7 +40,7 @@ count($result);   // 100
 $result->ids();   // 98 IDs da Twilio, depois 2 IDs da Vonage
 ```
 
-### O que conta como falha
+### O que conta como falha {#what-counts-as-a-failure}
 
 O failover passa para o próximo quando um provedor:
 
@@ -54,7 +54,7 @@ Se todos os provedores falharem, você recebe uma `DeliveryException` que começ
 Cada destinatário vai para o primeiro provedor que aceitar, então a ordem também é uma decisão de custo. Uma configuração típica é o seu provedor principal primeiro e uma segunda rede como reserva.
 :::
 
-## Balanceamento de carga
+## Balanceamento de carga {#load-balancing}
 
 Para distribuir o tráfego entre vários provedores, use `random`. Cada mensagem vai para um provedor sorteado do seu pool:
 

@@ -2,7 +2,7 @@
 
 <p class="lead">Teste nenhum deveria mandar SMS para um celular de verdade. Faça um fake da facade, rode o seu código e depois verifique o que teria sido enviado.</p>
 
-## Simulando envios
+## Simulando envios {#faking-sends}
 
 ```php
 use MrRijal\LaravelSms\Facades\Sms;
@@ -29,7 +29,7 @@ it('stays quiet for unverified numbers', function () {
 
 O `Sms::fake()` funciona em todos os lugares em que o pacote envia: a facade, as notificações, a trait `HasSms` e os jobs na fila.
 
-## Asserções disponíveis
+## Asserções disponíveis {#available-assertions}
 
 | Asserção | Passa quando |
 |---|---|
@@ -44,7 +44,7 @@ O `Sms::fake()` funciona em todos os lugares em que o pacote envia: a facade, as
 
 Para inspecionar as mensagens você mesmo, `Sms::sent()` e `Sms::queued()` devolvem collections de `SmsMessage`.
 
-## Ele se comporta como o de verdade
+## Ele se comporta como o de verdade {#it-behaves-like-the-real-thing}
 
 O fake não chama os provedores, mas faz tudo o que vem antes disso:
 
@@ -54,7 +54,7 @@ O fake não chama os provedores, mas faz tudo o que vem antes disso:
 - Drivers registrados com `Sms::extend()` continuam funcionando.
 - Cada mensagem é registrada do jeito que estava no momento do envio, mesmo que o seu código a altere depois.
 
-## Testando um driver
+## Testando um driver {#testing-a-driver}
 
 Para testar a integração com um provedor, inclusive o seu próprio [driver personalizado](/pt/guide/custom-drivers), faça o fake da camada HTTP. Todo driver HTTP usa o HTTP client do Laravel, então o `Http::fake()` intercepta as requisições dele:
 

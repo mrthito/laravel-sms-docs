@@ -38,7 +38,7 @@ features:
 
 ## Écrivez-le une fois {#write-it-once}
 
-<p>L'API reste compacte : à qui s'adresse le message, ce qu'il dit, et où vous voulez recevoir la réponse du fournisseur.</p>
+<p>L'API reste compacte : à qui s'adresse le message, ce qu'il dit, et où vous voulez recevoir la réponse du fournisseur.</p>
 
 <div class="home-code">
 <div>

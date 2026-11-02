@@ -32,7 +32,7 @@ TERMII_BASE_URL=
 Check the setup with a real message:
 
 ```bash
-php artisan sms:test +15551234567 --provider=termii
+php artisan sms:test +2348012345678 --provider=termii
 ```
 
 ## Send
@@ -41,7 +41,7 @@ php artisan sms:test +15551234567 --provider=termii
 use MrRijal\LaravelSms\Facades\Sms;
 
 Sms::provider('termii')
-    ->to('+15551234567')
+    ->to('+2348012345678')
     ->message('Your verification code is 4821.')
     ->send();
 ```

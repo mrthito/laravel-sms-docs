@@ -63,16 +63,30 @@ WhatsApp necesita **los dos** valores. Cuando añades el webhook en el panel de 
 
 ## Procesar los informes {#handling-the-reports}
 
-Cada webhook verificado dispara `SmsWebhookReceived`:
+Cada webhook verificado dispara `SmsWebhookReceived`. Gestiónalo con un listener en `app/Listeners`, que Laravel descubre automáticamente:
+
+```bash
+php artisan make:listener UpdateSmsStatus --event="MrRijal\LaravelSms\Events\SmsWebhookReceived"
+```
 
 ```php
+namespace App\Listeners;
+
+use App\Models\SmsLog;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use MrRijal\LaravelSms\Events\SmsWebhookReceived;
 
-Event::listen(function (SmsWebhookReceived $event) {
-    SmsLog::where('provider_id', $event->messageId)
-        ->update(['status' => $event->status]);
-});
+class UpdateSmsStatus implements ShouldQueue
+{
+    public function handle(SmsWebhookReceived $event): void
+    {
+        SmsLog::where('provider_id', $event->messageId)
+            ->update(['status' => $event->status]);
+    }
+}
 ```
+
+Al encolar el listener, el webhook puede responder al proveedor de inmediato. Los proveedores reintentan los webhooks que tardan en responder.
 
 | Propiedad | Contenido |
 |---|---|

@@ -2,7 +2,7 @@
 
 <p class="lead">Tudo o que o pacote faz, em uma só página. Cada item leva à parte do guia que o explica.</p>
 
-## Envio
+## Envio {#sending}
 
 | | |
 |---|---|
@@ -13,7 +13,7 @@
 | **Templates** | Flows do MSG91 (DLT), templates do WhatsApp e da Brevo, com texto de reserva para os outros provedores. [Templates →](/pt/guide/templates) |
 | **Macros** | Dê nome às mensagens que se repetem: `Sms::sendOtp($phone, $code)`. [Macros →](/pt/guide/sending#macros) |
 
-## Confiabilidade
+## Confiabilidade {#reliability}
 
 | | |
 |---|---|
@@ -23,7 +23,7 @@
 | **Balanceamento de carga** | Distribua as mensagens entre um pool de provedores. [Balanceamento de carga →](/pt/guide/failover#load-balancing) |
 | **Filas** | `sendLater()`, `sendLaterAt()`, um job criptografado por destinatário, com retentativas. [Filas →](/pt/guide/queueing) |
 
-## Velocidade
+## Velocidade {#speed}
 
 | | |
 |---|---|
@@ -31,24 +31,24 @@
 | **Requisições em paralelo** | Os demais rodam em paralelo, dez por vez por padrão. [Desempenho →](/pt/guide/performance#per-recipient-providers-in-parallel) |
 | **Cache de tokens** | Tokens OAuth são reaproveitados até expirarem. [Cache de tokens →](/pt/guide/performance#token-caching) |
 
-## Integração com o Laravel
+## Integração com o Laravel {#laravel-integration}
 
 | | |
 |---|---|
 | **Canal de notificação** | O `via()` devolve `'sms'` e o `toSms()` devolve a mensagem. [Notificações →](/pt/guide/notifications) |
-| **Eventos** | `SmsSending` (cancelável), `SmsSent`, `SmsFailed` e `SmsWebhookReceived`, descobertos automaticamente pelos seus listeners. [Eventos →](/pt/guide/events) |
+| **Eventos** | `SmsSending` (cancelável), `SmsSent`, `SmsFailed` e `SmsWebhookReceived`. O Laravel encontra suas classes de listener sozinho. [Eventos →](/pt/guide/events) |
 | **Webhooks** | Relatórios de entrega assinados para WhatsApp, Termii, Sendchamp, Africa's Talking e BulkSMS. [Webhooks →](/pt/guide/webhooks) |
 | **Artisan** | `php artisan sms:test` e uma seção no `php artisan about`. [Artisan →](/pt/reference/artisan) |
 | **Seguro no Octane e nas filas** | Nenhum estado compartilhado entre envios ou requisições. |
 
-## Testes
+## Testes {#testing}
 
 | | |
 |---|---|
 | **`Sms::fake()`** | Registra as mensagens em vez de enviá-las, com asserções fáceis de ler. [Testes →](/pt/guide/testing) |
 | **`Http::fake()`** | Todo driver HTTP roda sobre o HTTP client do Laravel. [Testando um driver →](/pt/guide/testing#testing-a-driver) |
 
-## Segurança
+## Segurança {#security}
 
 | | |
 |---|---|
@@ -56,7 +56,7 @@
 | **Payloads da fila criptografados** | Códigos e números são criptografados com a sua `APP_KEY`. [Filas →](/pt/guide/queueing#encrypted-at-rest) |
 | **Cuidado com credenciais** | Nenhum segredo em mensagens de exceção, URLs ou chaves de cache; números mascarados nos logs. [Segurança →](/pt/guide/security) |
 
-## Extensão
+## Extensão {#extending}
 
 | | |
 |---|---|

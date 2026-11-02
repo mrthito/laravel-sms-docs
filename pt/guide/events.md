@@ -11,7 +11,7 @@
 
 Os quatro ficam no namespace `MrRijal\LaravelSms\Events`. O `provider` é o nome pelo qual a mensagem foi enviada. Com `random`, é o provedor sorteado, como `twilio`; com `failover`, é `failover`.
 
-## Escrevendo um listener
+## Escrevendo um listener {#writing-a-listener}
 
 Desde o Laravel 11, os listeners se registram sozinhos. Gere um, declare o tipo do evento no `handle()` e o Laravel faz a ligação: sem service provider e sem array `$listen`.
 
@@ -53,7 +53,7 @@ Em produção, o `php artisan optimize` coloca em cache os listeners descobertos
 Quando o `SmsSent` dispara, o provedor já está com a mensagem. Se um dos seus listeners lançar uma exceção, ela vai para o seu error handler e o envio continua contando como bem-sucedido. Assim, um job na fila nunca reenvia o mesmo texto só porque a gravação no log de auditoria falhou.
 :::
 
-### Um listener, vários eventos
+### Um listener, vários eventos {#one-listener-several-events}
 
 Union types também funcionam. Este listener trata os dois desfechos:
 
@@ -69,7 +69,7 @@ public function handle(SmsSent|SmsFailed $event): void
 }
 ```
 
-### Listeners na fila
+### Listeners na fila {#queued-listeners}
 
 Gravar no banco de dados ou chamar uma API de métricas não deveria deixar o envio mais lento. Implemente `ShouldQueue` e o listener roda na sua fila:
 
@@ -97,7 +97,7 @@ class RecordSentSms implements ShouldQueue
 }
 ```
 
-## Cancelando um envio
+## Cancelando um envio {#cancelling-a-send}
 
 Devolva `false` em um listener de `SmsSending` e a mensagem não é enviada. Nesse caso, o `sendNow()` devolve `null`.
 
@@ -127,7 +127,7 @@ Um listener que cancela envios não pode implementar `ShouldQueue`. Um listener 
 
 O listener enxerga a mensagem completa: `getTo()`, `getText()`, `getTemplateId()`, `getVariables()`, `getFrom()` e `getProvider()`.
 
-## Reagindo a falhas
+## Reagindo a falhas {#reacting-to-failures}
 
 ```php
 namespace App\Listeners;
@@ -152,7 +152,7 @@ O `getRedactedRecipientsForLogging()` mascara tudo menos os quatro últimos díg
 
 O pacote já grava uma linha de log `error` para cada envio que falha. Envios bem-sucedidos não vão para o log: adicione um listener de `SmsSent` se quiser registrá-los.
 
-## Listeners com closure
+## Listeners com closure {#closure-listeners}
 
 Para algo rápido e pontual, uma closure no `AppServiceProvider::boot()` também resolve:
 
@@ -170,7 +170,7 @@ public function boot(): void
 
 Classes de listener são mais fáceis de testar e de colocar na fila, então prefira-as para tudo o que for ficar no projeto.
 
-## Testando seus listeners
+## Testando seus listeners {#testing-your-listeners}
 
 ```php
 use App\Listeners\RecordSentSms;

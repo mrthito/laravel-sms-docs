@@ -9,11 +9,11 @@
 | `SmsFailed` | Après l'échec d'un envoi (l'exception est tout de même levée) | `message`, `provider`, `exception` |
 | `SmsWebhookReceived` | À la réception d'un webhook vérifié d'un fournisseur | `provider`, `payload`, `messageId`, `status`, `recipient` |
 
-Ils se trouvent tous les quatre dans l'espace de noms `MrRijal\LaravelSms\Events`. `provider` est le nom du fournisseur par lequel le message est passé. Avec `random`, c'est le fournisseur tiré au sort, par exemple `twilio` ; avec `failover`, c'est `failover`.
+Ils se trouvent tous les quatre dans l'espace de noms `MrRijal\LaravelSms\Events`. `provider` est le nom du fournisseur par lequel le message est passé. Avec `random`, c'est le fournisseur tiré au sort, par exemple `twilio` ; avec `failover`, c'est `failover`.
 
 ## Écrire un listener {#writing-a-listener}
 
-Depuis Laravel 11, les listeners s'enregistrent d'eux-mêmes. Générez-en un, typez l'événement dans `handle()`, et Laravel se charge du branchement : ni service provider, ni tableau `$listen`.
+Depuis Laravel 11, les listeners s'enregistrent d'eux-mêmes. Générez-en un, typez l'événement dans `handle()`, et Laravel se charge du branchement : ni service provider, ni tableau `$listen`.
 
 ```bash
 php artisan make:listener RecordSentSms --event="MrRijal\LaravelSms\Events\SmsSent"
@@ -41,7 +41,7 @@ class RecordSentSms
 }
 ```
 
-Laravel parcourt `app/Listeners`, trouve `handle(SmsSent $event)` et inscrit le listener pour cet événement. Pour vérifier ce qu'il a découvert :
+Laravel parcourt `app/Listeners`, trouve `handle(SmsSent $event)` et inscrit le listener pour cet événement. Pour vérifier ce qu'il a découvert :
 
 ```bash
 php artisan event:list --event=SmsSent
@@ -55,7 +55,7 @@ Au moment où `SmsSent` est déclenché, le fournisseur a déjà le message. Si 
 
 ### Un listener, plusieurs événements {#one-listener-several-events}
 
-Les types union fonctionnent aussi. Ce listener traite les deux issues possibles :
+Les types union fonctionnent aussi. Ce listener traite les deux issues possibles :
 
 ```php
 use MrRijal\LaravelSms\Events\SmsFailed;
@@ -71,7 +71,7 @@ public function handle(SmsSent|SmsFailed $event): void
 
 ### Listeners en file d'attente {#queued-listeners}
 
-Écrire en base de données ou appeler une API de statistiques ne devrait pas ralentir un envoi. Implémentez `ShouldQueue` et le listener s'exécute dans votre file d'attente :
+Écrire en base de données ou appeler une API de statistiques ne devrait pas ralentir un envoi. Implémentez `ShouldQueue` et le listener s'exécute dans votre file d'attente :
 
 ```php
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -85,7 +85,7 @@ class RecordSentSms implements ShouldQueue
 }
 ```
 
-Sous Laravel 13, vous pouvez choisir la file avec un attribut :
+Sous Laravel 13, vous pouvez choisir la file avec un attribut :
 
 ```php
 use Illuminate\Queue\Attributes\Queue;
@@ -122,10 +122,10 @@ class RespectOptOuts
 Renvoyez `null` (ou rien du tout) pour laisser passer le message. Seul un `false` explicite annule l'envoi.
 
 ::: warning Gardez ce listener synchrone
-Un listener d'annulation ne doit pas implémenter `ShouldQueue`. Un listener en file d'attente s'exécute alors que le message est déjà parti : il n'a plus rien à annuler.
+Un listener d'annulation ne doit pas implémenter `ShouldQueue`. Un listener en file d'attente s'exécute alors que le message est déjà parti : il n'a plus rien à annuler.
 :::
 
-Le listener voit le message complet : `getTo()`, `getText()`, `getTemplateId()`, `getVariables()`, `getFrom()` et `getProvider()`.
+Le listener voit le message complet : `getTo()`, `getText()`, `getTemplateId()`, `getVariables()`, `getFrom()` et `getProvider()`.
 
 ## Réagir aux échecs {#reacting-to-failures}
 
@@ -148,13 +148,13 @@ class AlertOnSmsFailure
 }
 ```
 
-`getRedactedRecipientsForLogging()` masque tous les chiffres sauf les quatre derniers (`***4567`) : les numéros de téléphone ne s'accumulent pas dans vos journaux.
+`getRedactedRecipientsForLogging()` masque tous les chiffres sauf les quatre derniers (`***4567`) : les numéros de téléphone ne s'accumulent pas dans vos journaux.
 
-Le package écrit déjà une ligne de journal de niveau `error` pour chaque envoi échoué. Les envois réussis ne sont pas journalisés : ajoutez un listener de `SmsSent` si vous voulez les conserver.
+Le package écrit déjà une ligne de journal de niveau `error` pour chaque envoi échoué. Les envois réussis ne sont pas journalisés : ajoutez un listener de `SmsSent` si vous voulez les conserver.
 
 ## Listeners sous forme de closure {#closure-listeners}
 
-Pour un besoin ponctuel, une closure dans `AppServiceProvider::boot()` fait aussi l'affaire :
+Pour un besoin ponctuel, une closure dans `AppServiceProvider::boot()` fait aussi l'affaire :
 
 ```php
 use Illuminate\Support\Facades\Event;
@@ -168,7 +168,7 @@ public function boot(): void
 }
 ```
 
-Les classes de listener sont plus faciles à tester et à mettre en file d'attente : préférez-les pour tout ce qui est appelé à durer.
+Les classes de listener sont plus faciles à tester et à mettre en file d'attente : préférez-les pour tout ce qui est appelé à durer.
 
 ## Tester vos listeners {#testing-your-listeners}
 
@@ -182,4 +182,4 @@ it('records sent messages', function () {
 });
 ```
 
-`Sms::fake()` déclenche `SmsSending` et `SmsSent` exactement comme un vrai envoi : vous pouvez donc aussi tester vos listeners de bout en bout. Voir [Tests](/fr/guide/testing).
+`Sms::fake()` déclenche `SmsSending` et `SmsSent` exactement comme un vrai envoi : vous pouvez donc aussi tester vos listeners de bout en bout. Voir [Tests](/fr/guide/testing).

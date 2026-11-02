@@ -63,16 +63,30 @@ WhatsApp **两个**值都需要。在 Meta 控制台添加 Webhook 时，Meta �
 
 ## 处理送达报告 {#handling-the-reports}
 
-每个通过验证的 Webhook 都会触发 `SmsWebhookReceived`：
+每个通过验证的 Webhook 都会触发 `SmsWebhookReceived`。在 `app/Listeners` 中写一个监听器来处理它，Laravel 会自动发现：
+
+```bash
+php artisan make:listener UpdateSmsStatus --event="MrRijal\LaravelSms\Events\SmsWebhookReceived"
+```
 
 ```php
+namespace App\Listeners;
+
+use App\Models\SmsLog;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use MrRijal\LaravelSms\Events\SmsWebhookReceived;
 
-Event::listen(function (SmsWebhookReceived $event) {
-    SmsLog::where('provider_id', $event->messageId)
-        ->update(['status' => $event->status]);
-});
+class UpdateSmsStatus implements ShouldQueue
+{
+    public function handle(SmsWebhookReceived $event): void
+    {
+        SmsLog::where('provider_id', $event->messageId)
+            ->update(['status' => $event->status]);
+    }
+}
 ```
+
+把监听器放进队列，Webhook 就能立即响应服务商。响应慢的 Webhook 会被服务商重试。
 
 | 属性 | 内容 |
 |---|---|

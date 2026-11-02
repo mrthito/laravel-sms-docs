@@ -32,7 +32,7 @@ AFRICASTALKING_SANDBOX=
 Check the setup with a real message:
 
 ```bash
-php artisan sms:test +15551234567 --provider=africastalking
+php artisan sms:test +254711123456 --provider=africastalking
 ```
 
 ## Send
@@ -41,7 +41,7 @@ php artisan sms:test +15551234567 --provider=africastalking
 use MrRijal\LaravelSms\Facades\Sms;
 
 Sms::provider('africastalking')
-    ->to('+15551234567')
+    ->to('+254711123456')
     ->message('Your verification code is 4821.')
     ->send();
 ```
@@ -53,6 +53,6 @@ Sms::provider('africastalking')
 
 ## Delivery reports
 
-Point Africa's Talking's delivery-report URL at `https://your-app.com/laravel-sms/webhook/africastalking` and enable [webhooks](/guide/webhooks). Requests are verified with A `?token=` secret in the callback URL, using `AFRICASTALKING_WEBHOOK_SECRET` (Africa's Talking doesn't sign callbacks).
+Point Africa's Talking's delivery-report URL at `https://your-app.com/laravel-sms/webhook/africastalking` and enable [webhooks](/guide/webhooks). Requests are verified with a `?token=` secret in the callback URL, using `AFRICASTALKING_WEBHOOK_SECRET` (Africa's Talking doesn't sign callbacks).
 
 Verified reports fire the `SmsWebhookReceived` event.

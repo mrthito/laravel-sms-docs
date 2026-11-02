@@ -40,7 +40,37 @@ public function toSms(object $notifiable): string
 }
 ```
 
-要让短信通知走队列，和其他 Laravel 通知一样，让通知类实现 `ShouldQueue` 即可。
+要让短信通知走队列，和其他 Laravel 通知一样，让通知类实现 `ShouldQueue` 即可。Laravel 会为每个可通知对象的每个渠道各创建一个任务，所以短信和邮件各自独立重试。
+
+用 `viaQueues()` 把短信任务发到单独的队列：
+
+```php
+public function viaQueues(): array
+{
+    return [
+        'mail' => 'default',
+        'sms' => 'sms',
+    ];
+}
+```
+
+在 Laravel 13 中，可以用注解（attribute）声明重试次数：
+
+```php
+use Illuminate\Queue\Attributes\Tries;
+
+#[Tries(3)]
+class OrderShipped extends Notification implements ShouldQueue
+{
+    // …
+}
+```
+
+如果通知是在数据库事务中发送的，链式调用 `afterCommit()`，这样订单被回滚时就不会发出短信：
+
+```php
+$user->notify((new OrderShipped($order))->afterCommit());
+```
 
 ## 路由到手机号 {#routing-to-a-phone-number}
 
@@ -99,7 +129,7 @@ class User extends Authenticatable
 {
     use HasSms, Notifiable;
 
-    public function routeNotificationForSms(): string
+    public function routeNotificationForSms(?Notification $notification = null): string
     {
         return $this->phone;
     }
@@ -109,4 +139,4 @@ $user->sms('Your order has shipped.');
 $user->smsTemplate('otp', ['code' => 4821]);
 ```
 
-两者都会立即发送，并返回 `SmsResult`。
+两者都会立即发送，并返回 `SmsResult`。使用这个 trait 时，请像上面那样让 `$notification` 参数保持可选，这样同一个方法既能服务于通知，也能服务于这两个辅助方法。

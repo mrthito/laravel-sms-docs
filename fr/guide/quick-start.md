@@ -1,6 +1,6 @@
 # Votre premier SMS
 
-<p class="lead">Un tour guidé des cinq choses que vous ferez le plus souvent : envoyer, vérifier le résultat, mettre en file d'attente, notifier et tester.</p>
+<p class="lead">Un tour guidé des cinq choses que vous ferez le plus souvent : envoyer, vérifier le résultat, mettre en file d'attente, notifier et tester.</p>
 
 ## Envoyer un message {#send-a-message}
 
@@ -12,11 +12,11 @@ Sms::to('+15551234567')
     ->send();
 ```
 
-Les numéros peuvent contenir des espaces, des tirets, des points et des parenthèses : `+1 (555) 123-4567` et `+15551234567` désignent le même destinataire. Utilisez autant que possible le format international, avec un `+` en tête. La plupart des fournisseurs en ont besoin pour acheminer le message.
+Les numéros peuvent contenir des espaces, des tirets, des points et des parenthèses : `+1 (555) 123-4567` et `+15551234567` désignent le même destinataire. Utilisez autant que possible le format international, avec un `+` en tête. La plupart des fournisseurs en ont besoin pour acheminer le message.
 
 ## Vérifier ce qui s'est passé {#check-what-happened}
 
-`sendNow()` envoie immédiatement et renvoie un `SmsResult` :
+`sendNow()` envoie immédiatement et renvoie un `SmsResult` :
 
 ```php
 $result = Sms::to('+15551234567')->message('Hello')->sendNow();
@@ -25,7 +25,7 @@ $result->provider;   // "twilio"
 $result->firstId();  // l'identifiant du message chez le fournisseur, à conserver
 ```
 
-Si le fournisseur refuse le message, une `DeliveryException` vous en donne la raison :
+Si le fournisseur refuse le message, une `DeliveryException` vous en donne la raison :
 
 ```php
 use MrRijal\LaravelSms\Exceptions\DeliveryException;
@@ -41,7 +41,7 @@ La page [Résultats et erreurs](/fr/guide/results) détaille les échecs partiel
 
 ## Le mettre en file d'attente {#queue-it}
 
-Un envoi implique un aller-retour réseau. Pendant une requête web, mettez le message en file d'attente pour que vos utilisateurs n'aient pas à patienter :
+Un envoi implique un aller-retour réseau. Pendant une requête web, mettez le message en file d'attente pour que vos utilisateurs n'aient pas à patienter :
 
 ```php
 Sms::to($user->phone)->message('Welcome aboard!')->sendLater();
@@ -53,7 +53,7 @@ Sms::to($user->phone)
 
 ## L'envoyer sous forme de notification {#send-it-as-a-notification}
 
-Si vous utilisez déjà les notifications Laravel, ajoutez le canal `sms` :
+Si vous utilisez déjà les notifications Laravel, ajoutez le canal `sms` :
 
 ```php
 use MrRijal\LaravelSms\SmsMessage;

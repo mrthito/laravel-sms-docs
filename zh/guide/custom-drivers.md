@@ -115,9 +115,10 @@ return $this->sendOnce(
 
 ## 运行时注册 {#registering-at-runtime}
 
-如果驱动需要从容器中获取依赖，就在服务提供者中注册一个工厂：
+如果驱动需要从容器中获取依赖，就在 `AppServiceProvider` 中注册一个工厂：
 
 ```php
+// app/Providers/AppServiceProvider.php
 use MrRijal\LaravelSms\Facades\Sms;
 
 public function boot(): void

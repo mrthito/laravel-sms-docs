@@ -18,7 +18,7 @@
 ## 一条短信的旅程 {#how-a-message-travels}
 
 ```mermaid
-flowchart LR
+flowchart TB
     A["Sms::to(…)->message(…)"] --> B["PendingSms<br/><small>全新的一条短信</small>"]
     B --> C{"SmsManager"}
     C -- "SmsSending" --> D["驱动<br/><small>Twilio、Sinch……</small>"]

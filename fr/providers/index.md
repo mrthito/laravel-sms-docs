@@ -1,6 +1,6 @@
 # Choisir un fournisseur
 
-<p class="lead">Tous les fournisseurs passent par la même API : ce choix est une affaire de prix, de couverture et de formalités, pas de code. Vous pourrez changer d'avis plus tard en modifiant une seule ligne du <code>.env</code>.</p>
+<p class="lead">Tous les fournisseurs passent par la même API : ce choix est une affaire de prix, de couverture et de formalités, pas de code. Pour en changer plus tard, il suffit d'ajouter les identifiants d'accès du nouveau fournisseur et de modifier <code>SMS_PROVIDER</code> ; votre code, lui, ne bouge pas.</p>
 
 ## En un coup d'œil {#at-a-glance}
 
@@ -36,10 +36,10 @@ Les fournisseurs à envoi **groupé** reçoivent tous les destinataires en une s
 **Pensez ensuite à ce que vous envoyez.**
 
 - *Les codes de connexion et les alertes* ont davantage besoin d'une livraison rapide et fiable que de prix bas. Twilio, Sinch, Vonage et Infobip disposent des connexions directes aux opérateurs les plus étendues.
-- *Les annonces à grande échelle* se prêtent aux fournisseurs à envoi groupé, qui touchent tout le monde en une seule requête : Sinch, Plivo, Infobip, ClickSend, Clickatell.
+- *Les annonces à grande échelle* se prêtent aux fournisseurs à envoi groupé, qui touchent tout le monde en une seule requête : Sinch, Plivo, Infobip, ClickSend, Clickatell.
 - *Les conversations* où les clients répondent ont leur place sur [WhatsApp](/fr/providers/whatsapp) ou chez un fournisseur proposant des numéros bidirectionnels et des webhooks de livraison.
 
-**Et enfin à ce que vous avez déjà.** Vous êtes sur AWS ? [Amazon SNS](/fr/providers/aws-sns) est facturé sur votre compte existant. Vous envoyez déjà vos e-mails via Brevo ? Ses [SMS](/fr/providers/brevo) partagent le même tableau de bord.
+**Et enfin à ce que vous avez déjà.** Vous êtes sur AWS ? [Amazon SNS](/fr/providers/aws-sns) est facturé sur votre compte existant. Vous envoyez déjà vos e-mails via Brevo ? Ses [SMS](/fr/providers/brevo) partagent le même tableau de bord.
 
 ::: tip Ne dépendez pas d'un seul réseau
 Quel que soit votre choix, placez un second fournisseur derrière lui grâce au [basculement](/fr/guide/failover). Les pannes sont rares, mais quand elles surviennent, vos codes de connexion continuent d'arriver.
@@ -47,7 +47,7 @@ Quel que soit votre choix, placez un second fournisseur derrière lui grâce au 
 
 ## Identifiants d'expéditeur et enregistrement {#sender-ids-and-registration}
 
-La plupart des pays exigent désormais une forme d'enregistrement avant de pouvoir envoyer des SMS d'application à personne (A2P) à grande échelle :
+La plupart des pays exigent désormais une forme d'enregistrement avant de pouvoir envoyer des SMS d'application à personne (A2P) à grande échelle :
 
 - **États-Unis :** enregistrement de la marque et de la campagne 10DLC, ou numéro gratuit (toll-free) vérifié.
 - **Inde :** enregistrement DLT de votre identifiant d'expéditeur et de chaque modèle de message.

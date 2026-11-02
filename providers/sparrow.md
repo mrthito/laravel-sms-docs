@@ -28,7 +28,7 @@ SPARROW_FROM=
 Check the setup with a real message:
 
 ```bash
-php artisan sms:test +15551234567 --provider=sparrow
+php artisan sms:test +9779812345678 --provider=sparrow
 ```
 
 ## Send
@@ -37,7 +37,7 @@ php artisan sms:test +15551234567 --provider=sparrow
 use MrRijal\LaravelSms\Facades\Sms;
 
 Sms::provider('sparrow')
-    ->to('+15551234567')
+    ->to('+9779812345678')
     ->message('Your verification code is 4821.')
     ->send();
 ```

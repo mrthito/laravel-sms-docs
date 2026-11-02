@@ -18,7 +18,7 @@ Este paquete es esa infraestructura, escrita una sola vez y probada en todas las
 ## El recorrido de un mensaje {#how-a-message-travels}
 
 ```mermaid
-flowchart LR
+flowchart TB
     A["Sms::to(…)->message(…)"] --> B["PendingSms<br/><small>un mensaje nuevo</small>"]
     B --> C{"SmsManager"}
     C -- "SmsSending" --> D["Driver<br/><small>Twilio, Sinch, …</small>"]

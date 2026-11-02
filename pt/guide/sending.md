@@ -2,7 +2,7 @@
 
 <p class="lead">Todo envio começa na facade <code>Sms</code> e termina com um de quatro verbos. Tudo o que fica no meio descreve a mensagem.</p>
 
-## O builder
+## O builder {#the-builder}
 
 Chamar `Sms::to()`, `Sms::provider()`, `Sms::message()` ou `Sms::template()` devolve um `PendingSms` novo. Encadeie o que precisar e termine com um verbo:
 
@@ -25,7 +25,7 @@ Sms::provider('vonage')               // opcional: o padrão é o SMS_PROVIDER
 
 Como cada chamada à facade começa um builder novo, dois envios nunca compartilham destinatários nem texto, nem mesmo dentro de um worker do Octane que roda por muito tempo.
 
-## Destinatários
+## Destinatários {#recipients}
 
 O `to()` aceita um único número, um array ou qualquer iterável, inclusive uma collection:
 
@@ -45,7 +45,7 @@ Cada número é limpo e validado no momento em que você o adiciona:
 Guarde e envie os números no formato internacional: `+` seguido do código do país e do número. Alguns provedores recusam formatos locais de cara, e outros mandam a mensagem para o país errado.
 :::
 
-## Texto
+## Texto {#text}
 
 ```php
 Sms::to($phone)->message('Your table is ready.');
@@ -55,7 +55,7 @@ O texto passa por trim e não pode ficar vazio. As mensagens podem ter até 1.60
 
 O `content()` é um alias de `message()`, caso você prefira o nome usado nas notificações do Laravel.
 
-## Templates
+## Templates {#templates}
 
 Alguns provedores enviam templates pré-aprovados em vez de texto livre. Na Índia, as regras de DLT exigem isso; o WhatsApp exige templates para conversas iniciadas pela empresa.
 
@@ -68,7 +68,7 @@ Sms::provider('msg91')
 
 Templates são suportados pelo [MSG91](/pt/providers/msg91), pelo [WhatsApp](/pt/providers/whatsapp) e pela [Brevo](/pt/providers/brevo). Os demais provedores precisam de texto: mandar para eles uma mensagem só com template lança uma `InvalidMessageException` que informa o nome do provedor.
 
-## Remetente
+## Remetente {#sender}
 
 Cada provedor tem um remetente configurado, como um número ou um ID alfanumérico tipo `ACME`. Para trocar o remetente de uma única mensagem, use `from()`:
 
@@ -78,7 +78,7 @@ Sms::to($phone)->from('ACME Alerts')->message('Your parcel is out for delivery.'
 
 Remetentes alfanuméricos não são permitidos em todo lugar. Nos Estados Unidos e no Canadá, você precisa enviar a partir de um número registrado, então confira as regras do seu provedor para cada país para onde você envia.
 
-## Escolhendo um provedor
+## Escolhendo um provedor {#choosing-a-provider}
 
 O `provider()` envia esta mensagem por um provedor específico, em vez do padrão:
 
@@ -88,7 +88,7 @@ Sms::provider('termii')->to('+2348012345678')->message('Hello Lagos')->send();
 
 Dois nomes são especiais: `failover` tenta uma cadeia de provedores em ordem, e `random` sorteia um de um pool. Os dois são explicados em [Failover e balanceamento de carga](/pt/guide/failover).
 
-## Partes condicionais
+## Partes condicionais {#conditional-parts}
 
 O `PendingSms` aceita o `when()` e o `unless()` do Laravel:
 
@@ -99,7 +99,7 @@ Sms::to($order->customer_phone)
     ->send();
 ```
 
-## Montando uma mensagem com antecedência
+## Montando uma mensagem com antecedência {#building-a-message-ahead-of-time}
 
 O `SmsMessage` é um objeto simples que você pode montar, passar adiante e enviar depois:
 
@@ -113,7 +113,7 @@ $message = SmsMessage::create('Maintenance tonight from 10pm.')
 Sms::sendNow($message);
 ```
 
-## Macros
+## Macros {#macros}
 
 Dê um nome próprio às mensagens que se repetem:
 

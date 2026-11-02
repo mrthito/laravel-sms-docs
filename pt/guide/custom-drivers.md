@@ -2,7 +2,7 @@
 
 <p class="lead">Se o seu provedor não vem embutido, um driver é uma classe pequena. A classe base cuida de timeouts, concorrência, falhas parciais e mensagens de erro seguras, então você só descreve a API do provedor.</p>
 
-## Um driver completo
+## Um driver completo {#a-complete-driver}
 
 Aqui está um driver para um provedor fictício, a Acme, que aceita um destinatário por requisição:
 
@@ -69,7 +69,7 @@ Registre-o no `config/sms.php`:
 
 E ele funciona como qualquer provedor embutido: `Sms::provider('acme')`, cadeias de failover, filas, `php artisan sms:test --provider=acme`.
 
-## O que a classe base oferece
+## O que a classe base oferece {#what-the-base-class-gives-you}
 
 | Método | Use para |
 |---|---|
@@ -88,7 +88,7 @@ E ele funciona como qualquer provedor embutido: `Sms::provider('acme')`, cadeias
 
 As requisições montadas pela classe base já vêm com timeouts, um header `Accept` JSON e um `User-Agent`, e aparecem no `Http::fake()` como qualquer outra requisição.
 
-## Endpoints de envio em massa
+## Endpoints de envio em massa {#bulk-endpoints}
 
 Se o provedor aceita vários destinatários em uma única chamada, use o `sendOnce()` e monte o resultado você mesmo:
 
@@ -113,7 +113,7 @@ return $this->sendOnce(
 
 Se o provedor informa cada destinatário separadamente, lance uma `DeliveryException` com `failedRecipients` e um resultado `partial` para os que ele aceitou. O [driver da ClickSend](https://github.com/mr-rijal/laravel-sms/blob/main/src/Drivers/ClickSendDriver.php) é um bom exemplo para copiar.
 
-## Registrando em tempo de execução
+## Registrando em tempo de execução {#registering-at-runtime}
 
 Para drivers que precisam de dependências do container, registre uma factory no `AppServiceProvider`:
 
@@ -129,7 +129,7 @@ public function boot(): void
 
 O `$config` é a entrada do driver em `sms.providers`. Drivers registrados desse jeito continuam funcionando no Octane, nos workers de fila e com o `Sms::fake()`.
 
-## O mínimo
+## O mínimo {#the-minimum}
 
 Qualquer classe que implemente `MrRijal\LaravelSms\Contracts\SmsProvider` é um driver válido. Ela precisa de um único método:
 
@@ -139,6 +139,6 @@ public function send(SmsMessage $message): SmsResult;
 
 Devolva os destinatários aceitos e lance uma `DeliveryException` nas falhas. Estender o `HttpDriver` é opcional, mas poupa você de muitos casos de borda.
 
-## Recebendo webhooks
+## Recebendo webhooks {#receiving-webhooks}
 
 Para aceitar relatórios de entrega no seu driver, implemente `MrRijal\LaravelSms\Contracts\HandlesWebhooks` e use a trait `VerifiesWebhooks` para verificar as assinaturas. Com isso, as requisições para `/laravel-sms/webhook/acme` são direcionadas para o seu método `handleWebhook()`. O [driver da Termii](https://github.com/mr-rijal/laravel-sms/blob/main/src/Drivers/TermiiDriver.php) embutido mostra o padrão.

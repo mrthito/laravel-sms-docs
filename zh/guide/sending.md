@@ -118,11 +118,14 @@ Sms::sendNow($message);
 给经常发送的短信起个专属的名字：
 
 ```php
-// 在服务提供者的 boot() 方法中
-Sms::macro('sendOtp', function (string $phone, int $code) {
-    return $this->to($phone)->template('otp', ['code' => $code])->sendNow();
-});
+// app/Providers/AppServiceProvider.php
+public function boot(): void
+{
+    Sms::macro('sendOtp', function (string $phone, int $code) {
+        return $this->to($phone)->template('otp', ['code' => $code])->sendNow();
+    });
+}
 
-// 在任意位置
+// 在应用的任意位置
 Sms::sendOtp($user->phone, 4821);
 ```

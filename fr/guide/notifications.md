@@ -4,7 +4,7 @@
 
 ## Écrire une notification {#writing-a-notification}
 
-Ajoutez `sms` à `via()` et renvoyez le message depuis `toSms()` :
+Ajoutez `sms` à `via()` et renvoyez le message depuis `toSms()` :
 
 ```php
 use Illuminate\Bus\Queueable;
@@ -31,7 +31,7 @@ class OrderShipped extends Notification implements ShouldQueue
 }
 ```
 
-Quand vous n'avez besoin de rien d'autre, `toSms()` peut aussi renvoyer une simple chaîne :
+Quand vous n'avez besoin de rien d'autre, `toSms()` peut aussi renvoyer une simple chaîne :
 
 ```php
 public function toSms(object $notifiable): string
@@ -40,9 +40,9 @@ public function toSms(object $notifiable): string
 }
 ```
 
-Pour mettre les notifications SMS en file d'attente, implémentez `ShouldQueue` sur la notification, comme pour n'importe quelle notification Laravel. Laravel crée un job par notifiable et par canal : le SMS et l'e-mail sont donc relancés indépendamment l'un de l'autre.
+Pour mettre les notifications SMS en file d'attente, implémentez `ShouldQueue` sur la notification, comme pour n'importe quelle notification Laravel. Laravel crée un job par notifiable et par canal : le SMS et l'e-mail sont donc relancés indépendamment l'un de l'autre.
 
-Envoyez les jobs SMS dans leur propre file avec `viaQueues()` :
+Envoyez les jobs SMS dans leur propre file avec `viaQueues()` :
 
 ```php
 public function viaQueues(): array
@@ -54,7 +54,7 @@ public function viaQueues(): array
 }
 ```
 
-Sous Laravel 13, le nombre de tentatives peut se déclarer par attribut :
+Sous Laravel 13, le nombre de tentatives peut se déclarer par attribut :
 
 ```php
 use Illuminate\Queue\Attributes\Tries;
@@ -66,7 +66,7 @@ class OrderShipped extends Notification implements ShouldQueue
 }
 ```
 
-Si la notification est envoyée à l'intérieur d'une transaction de base de données, chaînez `afterCommit()` : le SMS ne partira jamais pour une commande dont la transaction a été annulée.
+Si la notification est envoyée à l'intérieur d'une transaction de base de données, chaînez `afterCommit()` : le SMS ne partira jamais pour une commande dont la transaction a été annulée.
 
 ```php
 $user->notify((new OrderShipped($order))->afterCommit());
@@ -74,7 +74,7 @@ $user->notify((new OrderShipped($order))->afterCommit());
 
 ## Router vers un numéro de téléphone {#routing-to-a-phone-number}
 
-Le canal demande au notifiable où envoyer le message. Ajoutez `routeNotificationForSms()` à votre modèle :
+Le canal demande au notifiable où envoyer le message. Ajoutez `routeNotificationForSms()` à votre modèle :
 
 ```php
 class User extends Authenticatable
@@ -94,7 +94,7 @@ Un message qui a déjà des destinataires leur est envoyé directement, et le ro
 
 ### Notifications à la demande {#on-demand-notifications}
 
-Pour notifier quelqu'un qui ne figure pas parmi les utilisateurs de votre base de données :
+Pour notifier quelqu'un qui ne figure pas parmi les utilisateurs de votre base de données :
 
 ```php
 use Illuminate\Support\Facades\Notification;
@@ -104,7 +104,7 @@ Notification::route('sms', '+15551234567')->notify(new OrderShipped($order));
 
 ## La notification prête à l'emploi {#the-ready-made-notification}
 
-Pour les messages ponctuels, `SmsNotification` vous évite d'écrire une classe :
+Pour les messages ponctuels, `SmsNotification` vous évite d'écrire une classe :
 
 ```php
 use MrRijal\LaravelSms\Notifications\SmsNotification;
@@ -120,7 +120,7 @@ $user->notify(new SmsNotification(
 
 ## Le trait HasSms {#the-hassms-trait}
 
-Pour envoyer rapidement un SMS directement depuis un modèle, ajoutez `HasSms` :
+Pour envoyer rapidement un SMS directement depuis un modèle, ajoutez `HasSms` :
 
 ```php
 use MrRijal\LaravelSms\Traits\HasSms;
@@ -139,4 +139,4 @@ $user->sms('Your order has shipped.');
 $user->smsTemplate('otp', ['code' => 4821]);
 ```
 
-Les deux méthodes envoient immédiatement et renvoient le `SmsResult`. Avec le trait, gardez le paramètre `$notification` facultatif, comme ci-dessus : la même méthode sert alors aussi bien aux notifications qu'aux helpers.
+Les deux méthodes envoient immédiatement et renvoient le `SmsResult`. Avec le trait, gardez le paramètre `$notification` facultatif, comme ci-dessus : la même méthode sert alors aussi bien aux notifications qu'aux helpers.

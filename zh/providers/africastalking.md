@@ -32,7 +32,7 @@ AFRICASTALKING_SANDBOX=
 发一条真实短信验证配置：
 
 ```bash
-php artisan sms:test +15551234567 --provider=africastalking
+php artisan sms:test +254711123456 --provider=africastalking
 ```
 
 ## 发送 {#send}
@@ -41,7 +41,7 @@ php artisan sms:test +15551234567 --provider=africastalking
 use MrRijal\LaravelSms\Facades\Sms;
 
 Sms::provider('africastalking')
-    ->to('+15551234567')
+    ->to('+254711123456')
     ->message('Your verification code is 4821.')
     ->send();
 ```

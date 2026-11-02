@@ -1,10 +1,10 @@
 # Drivers sur mesure
 
-<p class="lead">Si votre fournisseur n'est pas intégré, un driver tient en une petite classe. La classe de base gère les timeouts, la concurrence, les échecs partiels et des messages d'erreur sans risque : vous n'avez qu'à décrire l'API du fournisseur.</p>
+<p class="lead">Si votre fournisseur n'est pas intégré, un driver tient en une petite classe. La classe de base gère les timeouts, la concurrence, les échecs partiels et des messages d'erreur sans risque : vous n'avez qu'à décrire l'API du fournisseur.</p>
 
 ## Un driver complet {#a-complete-driver}
 
-Voici un driver pour un fournisseur fictif, Acme, qui accepte un destinataire par requête :
+Voici un driver pour un fournisseur fictif, Acme, qui accepte un destinataire par requête :
 
 ```php
 namespace App\Sms;
@@ -50,7 +50,7 @@ class AcmeDriver extends HttpDriver
 }
 ```
 
-Enregistrez-le dans `config/sms.php` :
+Enregistrez-le dans `config/sms.php` :
 
 ```php
 'drivers' => [
@@ -67,13 +67,13 @@ Enregistrez-le dans `config/sms.php` :
 ],
 ```
 
-Il fonctionne alors comme n'importe quel fournisseur intégré : `Sms::provider('acme')`, chaînes de basculement, files d'attente, `php artisan sms:test --provider=acme`.
+Il fonctionne alors comme n'importe quel fournisseur intégré : `Sms::provider('acme')`, chaînes de basculement, files d'attente, `php artisan sms:test --provider=acme`.
 
 ## Ce que la classe de base vous apporte {#what-the-base-class-gives-you}
 
 | Méthode | Sert à |
 |---|---|
-| `require('key', …)` | Échouer immédiatement avec « Acme configuration is incomplete » quand des réglages manquent |
+| `require('key', …)` | Échouer immédiatement avec « Acme configuration is incomplete » quand des réglages manquent |
 | `value('key')` | Lire un réglage obligatoire sous forme de chaîne, débarrassée des espaces en début et en fin |
 | `string('key', $default)` / `bool('key')` | Lire des réglages facultatifs |
 | `oneOf('key', [...], $default)` | N'accepter que des valeurs connues, une région par exemple |
@@ -90,7 +90,7 @@ Les requêtes construites par la classe de base ont déjà des timeouts, un en-t
 
 ## Endpoints d'envoi groupé {#bulk-endpoints}
 
-Si le fournisseur accepte plusieurs destinataires dans un même appel, utilisez `sendOnce()` et construisez vous-même le résultat :
+Si le fournisseur accepte plusieurs destinataires dans un même appel, utilisez `sendOnce()` et construisez vous-même le résultat :
 
 ```php
 return $this->sendOnce(
@@ -115,7 +115,7 @@ Si le fournisseur rend compte de chaque destinataire séparément, levez une `De
 
 ## Enregistrement à l'exécution {#registering-at-runtime}
 
-Pour les drivers qui ont besoin de dépendances issues du conteneur, enregistrez une factory dans `AppServiceProvider` :
+Pour les drivers qui ont besoin de dépendances issues du conteneur, enregistrez une factory dans `AppServiceProvider` :
 
 ```php
 // app/Providers/AppServiceProvider.php
@@ -131,7 +131,7 @@ public function boot(): void
 
 ## Le strict minimum {#the-minimum}
 
-Toute classe qui implémente `MrRijal\LaravelSms\Contracts\SmsProvider` est un driver valide. Elle n'a besoin que d'une méthode :
+Toute classe qui implémente `MrRijal\LaravelSms\Contracts\SmsProvider` est un driver valide. Elle n'a besoin que d'une méthode :
 
 ```php
 public function send(SmsMessage $message): SmsResult;

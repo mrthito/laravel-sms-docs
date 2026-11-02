@@ -16,7 +16,7 @@ sequenceDiagram
     App->>App: Verifica a assinatura, dispara SmsWebhookReceived
 ```
 
-## Ativando
+## Ativando {#turning-them-on}
 
 Os webhooks ficam desligados até você ativá-los:
 
@@ -34,7 +34,7 @@ Passe para cada provedor a URL com a chave dele no final, por exemplo `https://e
 
 Há suporte a webhooks para **WhatsApp, Termii, Sendchamp, Africa's Talking e BulkSMS**.
 
-## Todo webhook precisa provar quem o enviou
+## Todo webhook precisa provar quem o enviou {#every-webhook-must-prove-who-sent-it}
 
 Um endpoint de webhook é uma URL pública. Sem verificação, qualquer pessoa poderia mandar relatórios de entrega falsos para ela. Por isso cada provedor precisa de um segredo, e requisições que não conseguem provar que o conhecem recebem um `401`. Se o segredo não estiver configurado, **todas** as requisições são recusadas: o endpoint nunca roda desprotegido.
 
@@ -47,7 +47,7 @@ Um endpoint de webhook é uma URL pública. Sem verificação, qualquer pessoa p
 | BulkSMS | `BULKSMS_WEBHOOK_SECRET` | `X-BulkSMS-Signature`, HMAC-SHA256 do corpo |
 | Africa's Talking | `AFRICASTALKING_WEBHOOK_SECRET` | Um `token` na URL de callback (veja abaixo) |
 
-### Africa's Talking
+### Africa's Talking {#africa-s-talking}
 
 A Africa's Talking não assina os callbacks, então o segredo vai na URL que você cadastra com eles:
 
@@ -57,11 +57,11 @@ https://example.com/laravel-sms/webhook/africastalking?token=your-long-random-se
 
 O pacote compara o token em tempo constante e depois o remove do payload, para que ele nunca chegue aos seus listeners nem aos seus logs. Use um valor aleatório longo, por exemplo a saída de `php -r "echo bin2hex(random_bytes(24));"`.
 
-### WhatsApp
+### WhatsApp {#whatsapp}
 
 O WhatsApp precisa dos **dois** valores. Quando você adiciona o webhook no painel da Meta, ela envia uma requisição `GET` com o seu verify token e espera receber um challenge de volta. A partir daí, cada relatório de entrega chega como um `POST` assinado com o seu app secret.
 
-## Tratando os relatórios
+## Tratando os relatórios {#handling-the-reports}
 
 Cada webhook verificado dispara o `SmsWebhookReceived`. Trate-o com um listener em `app/Listeners`, que o Laravel descobre automaticamente:
 
@@ -98,7 +98,7 @@ Colocar o listener na fila permite que o webhook responda ao provedor na hora. O
 
 As palavras de status variam de um provedor para outro. Compare com a documentação do provedor em vez de supor um vocabulário único.
 
-## Middleware e caminho
+## Middleware e caminho {#middleware-and-path}
 
 A rota usa o grupo de middleware `api`, que é stateless, e um rate limit de 120 requisições por minuto. Webhooks não têm sessão nem token CSRF. Ajuste os dois no `config/sms.php`:
 

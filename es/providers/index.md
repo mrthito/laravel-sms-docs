@@ -1,6 +1,6 @@
 # Cómo elegir proveedor
 
-<p class="lead">Todos los proveedores funcionan con la misma API, así que esta elección tiene que ver con precio, cobertura y trámites, no con código. Puedes cambiar de idea más adelante editando una sola línea del <code>.env</code>.</p>
+<p class="lead">Todos los proveedores funcionan con la misma API, así que esta elección tiene que ver con precio, cobertura y trámites, no con código. Si más adelante quieres cambiar, basta con añadir las credenciales del nuevo proveedor y cambiar <code>SMS_PROVIDER</code>; tu código sigue igual.</p>
 
 ## De un vistazo {#at-a-glance}
 

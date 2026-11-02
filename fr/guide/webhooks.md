@@ -1,6 +1,6 @@
 # Webhooks
 
-<p class="lead">Le résultat d'un envoi vous apprend que le fournisseur a accepté votre message. Les webhooks vous disent la suite : livré, en échec, ou une réponse de la personne à qui vous avez écrit.</p>
+<p class="lead">Le résultat d'un envoi vous apprend que le fournisseur a accepté votre message. Les webhooks vous disent la suite : livré, en échec, ou une réponse de la personne à qui vous avez écrit.</p>
 
 ```mermaid
 sequenceDiagram
@@ -18,13 +18,13 @@ sequenceDiagram
 
 ## Les activer {#turning-them-on}
 
-Les webhooks sont désactivés tant que vous ne les activez pas :
+Les webhooks sont désactivés tant que vous ne les activez pas :
 
 ```ini [.env]
 SMS_WEBHOOKS_ENABLED=true
 ```
 
-Une seule route est alors enregistrée pour tous les fournisseurs :
+Une seule route est alors enregistrée pour tous les fournisseurs :
 
 ```text
 POST  /laravel-sms/webhook/{provider}     name: sms.webhook
@@ -36,7 +36,7 @@ Les webhooks sont pris en charge pour **WhatsApp, Termii, Sendchamp, Africa's Ta
 
 ## Chaque webhook doit prouver son origine {#every-webhook-must-prove-who-sent-it}
 
-Un endpoint de webhook est une URL publique. Sans vérification, n'importe qui pourrait y poster de faux accusés de réception. Chaque fournisseur a donc besoin d'un secret, et toute requête incapable de prouver qu'elle le connaît reçoit une `401`. Si le secret n'est pas configuré, **toutes** les requêtes sont rejetées : l'endpoint ne tourne jamais sans protection.
+Un endpoint de webhook est une URL publique. Sans vérification, n'importe qui pourrait y poster de faux accusés de réception. Chaque fournisseur a donc besoin d'un secret, et toute requête incapable de prouver qu'elle le connaît reçoit une `401`. Si le secret n'est pas configuré, **toutes** les requêtes sont rejetées : l'endpoint ne tourne jamais sans protection.
 
 | Fournisseur | Variable | Vérification |
 |---|---|---|
@@ -49,7 +49,7 @@ Un endpoint de webhook est une URL publique. Sans vérification, n'importe qui p
 
 ### Africa's Talking {#africa-s-talking}
 
-Africa's Talking ne signe pas ses callbacks : le secret se place donc dans l'URL que vous enregistrez chez eux.
+Africa's Talking ne signe pas ses callbacks : le secret se place donc dans l'URL que vous enregistrez chez eux.
 
 ```text
 https://example.com/laravel-sms/webhook/africastalking?token=your-long-random-secret
@@ -63,7 +63,7 @@ WhatsApp a besoin des **deux** valeurs. Quand vous ajoutez le webhook dans le ta
 
 ## Traiter les accusés de réception {#handling-the-reports}
 
-Chaque webhook vérifié déclenche `SmsWebhookReceived`. Traitez-le avec un listener placé dans `app/Listeners`, que Laravel découvre automatiquement :
+Chaque webhook vérifié déclenche `SmsWebhookReceived`. Traitez-le avec un listener placé dans `app/Listeners`, que Laravel découvre automatiquement :
 
 ```bash
 php artisan make:listener UpdateSmsStatus --event="MrRijal\LaravelSms\Events\SmsWebhookReceived"
@@ -100,7 +100,7 @@ Les statuts varient d'un fournisseur à l'autre. Comparez-les à la documentatio
 
 ## Middleware et chemin {#middleware-and-path}
 
-La route utilise le groupe de middlewares `api`, sans état, et une limite de 120 requêtes par minute. Les webhooks n'ont ni session ni jeton CSRF. Vous pouvez ajuster les deux dans `config/sms.php` :
+La route utilise le groupe de middlewares `api`, sans état, et une limite de 120 requêtes par minute. Les webhooks n'ont ni session ni jeton CSRF. Vous pouvez ajuster les deux dans `config/sms.php` :
 
 ```php
 'webhooks' => [

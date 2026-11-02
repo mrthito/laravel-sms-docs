@@ -28,7 +28,7 @@ SPARROW_FROM=
 发一条真实短信验证配置：
 
 ```bash
-php artisan sms:test +15551234567 --provider=sparrow
+php artisan sms:test +9779812345678 --provider=sparrow
 ```
 
 ## 发送 {#send}
@@ -37,7 +37,7 @@ php artisan sms:test +15551234567 --provider=sparrow
 use MrRijal\LaravelSms\Facades\Sms;
 
 Sms::provider('sparrow')
-    ->to('+15551234567')
+    ->to('+9779812345678')
     ->message('Your verification code is 4821.')
     ->send();
 ```

@@ -27,7 +27,7 @@ it('stays quiet for unverified numbers', function () {
 });
 ```
 
-`Sms::fake()` fonctionne partout où le package envoie : la façade, les notifications, le trait `HasSms` et les jobs en file d'attente.
+`Sms::fake()` fonctionne partout où le package envoie : la façade, les notifications, le trait `HasSms` et les jobs en file d'attente.
 
 ## Assertions disponibles {#available-assertions}
 
@@ -46,17 +46,17 @@ Pour examiner les messages vous-même, `Sms::sent()` et `Sms::queued()` renvoien
 
 ## Il se comporte comme le vrai {#it-behaves-like-the-real-thing}
 
-Le fake n'appelle aucun fournisseur, mais il fait tout ce qui précède cet appel :
+Le fake n'appelle aucun fournisseur, mais il fait tout ce qui précède cet appel :
 
-- Les messages sont validés : un numéro invalide fait donc toujours échouer votre test.
-- Les noms de fournisseurs sont vérifiés : `Sms::provider('twillio')` lève une exception, exactement comme en production.
-- `SmsSending` et `SmsSent` sont déclenchés : vous pouvez tester vos listeners, y compris un listener qui annule un envoi.
+- Les messages sont validés : un numéro invalide fait donc toujours échouer votre test.
+- Les noms de fournisseurs sont vérifiés : `Sms::provider('twillio')` lève une exception, exactement comme en production.
+- `SmsSending` et `SmsSent` sont déclenchés : vous pouvez tester vos listeners, y compris un listener qui annule un envoi.
 - Les drivers enregistrés avec `Sms::extend()` continuent de fonctionner.
 - Chaque message est enregistré tel qu'il était au moment de l'envoi, même si votre code le modifie ensuite.
 
 ## Tester un driver {#testing-a-driver}
 
-Pour tester l'intégration d'un fournisseur, y compris votre propre [driver sur mesure](/fr/guide/custom-drivers), simulez plutôt la couche HTTP. Tous les drivers HTTP s'appuient sur le client HTTP de Laravel : `Http::fake()` intercepte donc leurs requêtes.
+Pour tester l'intégration d'un fournisseur, y compris votre propre [driver sur mesure](/fr/guide/custom-drivers), simulez plutôt la couche HTTP. Tous les drivers HTTP s'appuient sur le client HTTP de Laravel : `Http::fake()` intercepte donc leurs requêtes.
 
 ```php
 use Illuminate\Http\Client\Request;
@@ -76,5 +76,5 @@ Http::assertSent(fn (Request $request) => $request['To'] === '+15551234567');
 Ajoutez `Http::preventStrayRequests()` pour vous assurer que rien ne s'échappe vers une vraie API.
 
 ::: info Amazon SNS
-Le driver SNS passe par le SDK AWS et non par le client HTTP de Laravel : `Http::fake()` ne l'atteint donc pas. Passez plutôt un `SnsClient` mocké au driver : `new AwsSnsDriver($config, $snsClient)`.
+Le driver SNS passe par le SDK AWS et non par le client HTTP de Laravel : `Http::fake()` ne l'atteint donc pas. Passez plutôt un `SnsClient` mocké au driver : `new AwsSnsDriver($config, $snsClient)`.
 :::

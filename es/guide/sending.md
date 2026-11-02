@@ -118,11 +118,14 @@ Sms::sendNow($message);
 Dale nombre propio a los mensajes que envías una y otra vez:
 
 ```php
-// En el método boot() de un service provider
-Sms::macro('sendOtp', function (string $phone, int $code) {
-    return $this->to($phone)->template('otp', ['code' => $code])->sendNow();
-});
+// app/Providers/AppServiceProvider.php
+public function boot(): void
+{
+    Sms::macro('sendOtp', function (string $phone, int $code) {
+        return $this->to($phone)->template('otp', ['code' => $code])->sendNow();
+    });
+}
 
-// En cualquier parte
+// En cualquier parte de tu aplicación
 Sms::sendOtp($user->phone, 4821);
 ```

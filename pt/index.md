@@ -36,7 +36,7 @@ features:
 
 <div class="home-section">
 
-## Escreva uma vez
+## Escreva uma vez {#write-it-once}
 
 <p>A API é enxuta: para quem é, o que diz e onde você quer receber a resposta do provedor.</p>
 
@@ -98,7 +98,7 @@ Sms::assertSentTo('+15551234567');
 
 <div class="home-section">
 
-## Vinte provedores prontos para usar
+## Vinte provedores prontos para usar {#twenty-providers-ready-to-go}
 
 <p>As plataformas globais, as redes regionais que chegam aonde elas não chegam e alguns drivers para desenvolvimento e testes.</p>
 
@@ -129,7 +129,7 @@ Sms::assertSentTo('+15551234567');
 
 <div class="home-section home-closing">
 
-## Funcionando em dois minutos
+## Funcionando em dois minutos {#up-and-running-in-two-minutes}
 
 <p>Instale o pacote, adicione suas credenciais e envie uma mensagem de verdade pelo terminal antes de escrever uma linha de código.</p>
 

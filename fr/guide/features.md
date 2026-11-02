@@ -11,7 +11,7 @@
 | **Nettoyage des numéros** | Espaces, tirets, points et parenthèses supprimés, doublons écartés, numéros invalides refusés avant l'envoi. [Destinataires →](/fr/guide/sending#recipients) |
 | **Expéditeur personnalisable** | `->from('ACME')`, message par message. [Expéditeur →](/fr/guide/sending#sender) |
 | **Modèles (templates)** | Flows MSG91 (DLT), modèles WhatsApp et modèles Brevo, avec un texte de repli pour les autres fournisseurs. [Modèles de message →](/fr/guide/templates) |
-| **Macros** | Donnez un nom à vos messages récurrents : `Sms::sendOtp($phone, $code)`. [Macros →](/fr/guide/sending#macros) |
+| **Macros** | Donnez un nom à vos messages récurrents : `Sms::sendOtp($phone, $code)`. [Macros →](/fr/guide/sending#macros) |
 
 ## Fiabilité {#reliability}
 
@@ -19,7 +19,7 @@
 |---|---|
 | **Résultats avec identifiants de message** | Chaque envoi renvoie les identifiants du fournisseur pour chaque destinataire accepté. [Résultats →](/fr/guide/results) |
 | **Échecs détaillés** | `DeliveryException` liste les destinataires en échec et ceux qui sont passés. [Échecs partiels →](/fr/guide/results#partial-failures) |
-| **Basculement (failover)** | Enchaînez les fournisseurs : seuls les destinataires refusés passent au suivant, personne ne reçoit le message deux fois. [Basculement →](/fr/guide/failover) |
+| **Basculement (failover)** | Enchaînez les fournisseurs : seuls les destinataires refusés passent au suivant, personne ne reçoit le message deux fois. [Basculement →](/fr/guide/failover) |
 | **Répartition de charge** | Répartissez les messages sur un groupe de fournisseurs. [Répartition de charge →](/fr/guide/failover#load-balancing) |
 | **Files d'attente** | `sendLater()`, `sendLaterAt()`, un job chiffré par destinataire, avec nouvelles tentatives. [Files d'attente →](/fr/guide/queueing) |
 
@@ -36,7 +36,7 @@
 | | |
 |---|---|
 | **Canal de notification** | `via()` renvoie `'sms'`, et `toSms()` renvoie le message. [Notifications →](/fr/guide/notifications) |
-| **Événements** | `SmsSending` (annulable), `SmsSent`, `SmsFailed` et `SmsWebhookReceived`, découverts automatiquement par vos listeners. [Événements →](/fr/guide/events) |
+| **Événements** | `SmsSending` (annulable), `SmsSent`, `SmsFailed` et `SmsWebhookReceived`. Laravel trouve vos classes de listener tout seul. [Événements →](/fr/guide/events) |
 | **Webhooks** | Accusés de réception signés pour WhatsApp, Termii, Sendchamp, Africa's Talking et BulkSMS. [Webhooks →](/fr/guide/webhooks) |
 | **Artisan** | `php artisan sms:test` et une section dans `php artisan about`. [Artisan →](/fr/reference/artisan) |
 | **Compatible Octane et files d'attente** | Aucun état partagé entre les envois ni entre les requêtes. |
@@ -54,7 +54,7 @@
 |---|---|
 | **Webhooks fermés par défaut** | Les requêtes non signées ou invérifiables sont rejetées. [Webhooks →](/fr/guide/webhooks) |
 | **Charges utiles chiffrées en file d'attente** | Codes et numéros sont chiffrés avec votre `APP_KEY`. [Files d'attente →](/fr/guide/queueing#encrypted-at-rest) |
-| **Hygiène des identifiants d'accès** | Aucun secret dans les messages d'exception, les URL ou les clés de cache ; numéros masqués dans les journaux. [Sécurité →](/fr/guide/security) |
+| **Hygiène des identifiants d'accès** | Aucun secret dans les messages d'exception, les URL ou les clés de cache ; numéros masqués dans les journaux. [Sécurité →](/fr/guide/security) |
 
 ## Extension {#extending}
 

@@ -30,7 +30,7 @@ SENDCHAMP_ROUTE=
 Check the setup with a real message:
 
 ```bash
-php artisan sms:test +15551234567 --provider=sendchamp
+php artisan sms:test +2348012345678 --provider=sendchamp
 ```
 
 ## Send
@@ -39,7 +39,7 @@ php artisan sms:test +15551234567 --provider=sendchamp
 use MrRijal\LaravelSms\Facades\Sms;
 
 Sms::provider('sendchamp')
-    ->to('+15551234567')
+    ->to('+2348012345678')
     ->message('Your verification code is 4821.')
     ->send();
 ```

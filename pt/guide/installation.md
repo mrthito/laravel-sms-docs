@@ -2,7 +2,7 @@
 
 <p class="lead">Um comando do Composer e algumas linhas no <code>.env</code>. O service provider e a facade <code>Sms</code> se registram sozinhos.</p>
 
-## Instale o pacote
+## Instale o pacote {#install-the-package}
 
 ```bash
 composer require mr-rijal/laravel-sms
@@ -16,7 +16,7 @@ php artisan vendor:publish --tag=sms-config
 
 Isso cria o `config/sms.php`. Tudo nele vem de variáveis de ambiente, então a maioria dos projetos nunca edita o arquivo em si.
 
-## Escolha um provedor
+## Escolha um provedor {#choose-a-provider}
 
 Defina o provedor padrão e as credenciais dele. Com a Twilio, por exemplo:
 
@@ -34,7 +34,7 @@ A página de cada provedor lista exatamente quais variáveis ele precisa. Se voc
 Deixe o `SMS_PROVIDER` sem valor. O padrão é o driver `log`, que grava cada mensagem no log do Laravel em vez de enviá-la, assim nada chega a um celular de verdade por acidente.
 :::
 
-## Confira se está funcionando
+## Confira se está funcionando {#check-that-it-works}
 
 Envie uma mensagem de verdade pelo terminal. O caminho no código é exatamente o mesmo que a sua aplicação usa:
 
@@ -50,7 +50,7 @@ Se algo estiver errado, o comando mostra o que o provedor respondeu, por exemplo
 
 O `php artisan about` também ganha uma seção **Laravel SMS** que mostra o provedor padrão e se as filas e os webhooks estão ativados.
 
-## Opcional: Amazon SNS
+## Opcional: Amazon SNS {#optional-amazon-sns}
 
 O SDK da AWS é grande, por isso ele só é instalado se você precisar. Se for usar o driver [Amazon SNS](/pt/providers/aws-sns):
 
@@ -58,6 +58,6 @@ O SDK da AWS é grande, por isso ele só é instalado se você precisar. Se for 
 composer require aws/aws-sdk-php
 ```
 
-## Próximos passos
+## Próximos passos {#next-steps}
 
 [Envie sua primeira mensagem →](/pt/guide/quick-start)

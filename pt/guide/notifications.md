@@ -2,7 +2,7 @@
 
 <p class="lead">Se a sua aplicação já envia e-mails pelas notificações do Laravel, o SMS é só mais um canal. O pacote o registra como <code>sms</code>.</p>
 
-## Escrevendo uma notificação
+## Escrevendo uma notificação {#writing-a-notification}
 
 Adicione `sms` ao `via()` e devolva a mensagem no `toSms()`:
 
@@ -72,7 +72,7 @@ Se a notificação for enviada dentro de uma transação de banco de dados, enca
 $user->notify((new OrderShipped($order))->afterCommit());
 ```
 
-## Direcionando para um número de telefone
+## Direcionando para um número de telefone {#routing-to-a-phone-number}
 
 O canal pergunta ao notifiable para onde enviar. Adicione `routeNotificationForSms()` ao seu model:
 
@@ -92,7 +92,7 @@ Se ele devolver `null` ou uma string vazia, o SMS é ignorado sem alarde. Isso �
 
 Uma mensagem que já tem destinatários é enviada para eles, e o roteamento é ignorado.
 
-### Notificações sob demanda
+### Notificações sob demanda {#on-demand-notifications}
 
 Notifique alguém que não é um usuário do seu banco de dados:
 
@@ -102,7 +102,7 @@ use Illuminate\Support\Facades\Notification;
 Notification::route('sms', '+15551234567')->notify(new OrderShipped($order));
 ```
 
-## A notificação pronta
+## A notificação pronta {#the-ready-made-notification}
 
 Para mensagens avulsas, a `SmsNotification` poupa você de escrever uma classe:
 
@@ -118,7 +118,7 @@ $user->notify(new SmsNotification(
 ));
 ```
 
-## A trait HasSms
+## A trait HasSms {#the-hassms-trait}
 
 Para envios rápidos direto de um model, adicione a `HasSms`:
 

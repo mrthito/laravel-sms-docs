@@ -36,7 +36,7 @@ features:
 
 <div class="home-section">
 
-## 写一次就够了
+## 写一次就够了 {#write-it-once}
 
 <p>API 很精简：发给谁、说什么、服务商的返回结果要放到哪里。</p>
 
@@ -98,7 +98,7 @@ Sms::assertSentTo('+15551234567');
 
 <div class="home-section">
 
-## 二十家服务商，开箱即用
+## 二十家服务商，开箱即用 {#twenty-providers-ready-to-go}
 
 <p>既有覆盖全球的平台，也有能触达大平台覆盖不到之处的区域网络，另外还有几个用于开发和测试的驱动。</p>
 
@@ -129,7 +129,7 @@ Sms::assertSentTo('+15551234567');
 
 <div class="home-section home-closing">
 
-## 两分钟跑起来
+## 两分钟跑起来 {#up-and-running-in-two-minutes}
 
 <p>安装扩展包，填好凭据，还没写一行代码，就能在终端里发出一条真实的短信。</p>
 

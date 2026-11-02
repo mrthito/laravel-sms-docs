@@ -2,7 +2,7 @@
 
 <p class="lead">Um SMS só tem utilidade se chegar. Todo envio informa o que o provedor aceitou e, quando algo dá errado, exatamente quais destinatários foram afetados.</p>
 
-## O resultado
+## O resultado {#the-result}
 
 O `sendNow()` devolve um `SmsResult`:
 
@@ -32,7 +32,7 @@ Um resultado significa que o provedor **aceitou** a mensagem. A entrega no apare
 
 O `sendNow()` devolve `null` em um único caso: quando um [listener de `SmsSending`](/pt/guide/events#cancelling-a-send) cancelou o envio. O `send()` também devolve `null` quando coloca a mensagem na fila em vez de enviá-la.
 
-## Quando o provedor diz não
+## Quando o provedor diz não {#when-a-provider-says-no}
 
 Um envio recusado, ou para um provedor fora do ar, lança uma `DeliveryException`. A mensagem dela é escrita para pessoas e pode ir para o log sem problema:
 
@@ -55,7 +55,7 @@ try {
 }
 ```
 
-## Falhas parciais
+## Falhas parciais {#partial-failures}
 
 Envie para cem pessoas e talvez um número seja inválido. O pacote não finge que o envio inteiro falhou, nem esconde o número que falhou:
 
@@ -77,7 +77,7 @@ A mensagem também diz quantos falharam: `… (1 of 100 recipients failed)`.
 
 É isso também que torna o [failover](/pt/guide/failover) seguro: o próximo provedor só recebe os `failedRecipients`.
 
-## Todas as exceções que o pacote lança
+## Todas as exceções que o pacote lança {#every-exception-the-package-throws}
 
 Todas implementam `MrRijal\LaravelSms\Exceptions\SmsException`, então um único `catch` cobre o pacote inteiro:
 

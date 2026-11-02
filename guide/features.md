@@ -36,7 +36,7 @@
 | | |
 |---|---|
 | **Notification channel** | `via()` returns `'sms'`, and `toSms()` returns the message. [Notifications →](/guide/notifications) |
-| **Events** | `SmsSending` (cancellable), `SmsSent`, `SmsFailed` and `SmsWebhookReceived`, discovered automatically by your listeners. [Events →](/guide/events) |
+| **Events** | `SmsSending` (cancellable), `SmsSent`, `SmsFailed` and `SmsWebhookReceived`. Laravel finds your listener classes on its own. [Events →](/guide/events) |
 | **Webhooks** | Signed delivery reports for WhatsApp, Termii, Sendchamp, Africa's Talking and BulkSMS. [Webhooks →](/guide/webhooks) |
 | **Artisan** | `php artisan sms:test` and a section in `php artisan about`. [Artisan →](/reference/artisan) |
 | **Octane and queue safe** | No state shared between sends or requests. |

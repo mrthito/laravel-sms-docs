@@ -28,7 +28,7 @@ MSG91_SENDER=
 发一条真实短信验证配置：
 
 ```bash
-php artisan sms:test +15551234567 --provider=msg91
+php artisan sms:test +919812345678 --provider=msg91
 ```
 
 ## 发送 {#send}
@@ -37,12 +37,12 @@ php artisan sms:test +15551234567 --provider=msg91
 use MrRijal\LaravelSms\Facades\Sms;
 
 Sms::provider('msg91')
-    ->to('+15551234567')
+    ->to('+919812345678')
     ->message('Your verification code is 4821.')
     ->send();
 ```
 
 ## 注意事项 {#good-to-know}
 
-- 印度法规（DLT）要求每条商业短信都必须匹配一个已登记的模板。先在 MSG91 中创建一个 Flow，再用 `->template($flowId, ['otp' => 4821])` 发送。所有收件人放在一个请求里，每人各带一份变量。
+- 印度法规（DLT）要求每条商业短信都必须匹配一个已登记的模板。先在 MSG91 中创建一个 Flow，再用 `->template($flowId, ['otp' => 4821])` 发送。所有收件人放在一个请求里，每个人收到的变量都相同。
 - 纯文本短信使用 MSG91 的 v2 API，每个请求一个收件人；只有内容与某个 DLT 模板完全一致时，才能送达印度号码。

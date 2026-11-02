@@ -24,7 +24,7 @@ Sms::provider('failover')->to($phone)->message('Your code is 4821')->sendNow();
 假设你要发给 100 个人。Twilio 接收了 98 个，拒绝了两个它的网络无法触达的号码。故障转移只会把**这两个**交给 Vonage，已经收到短信的 98 个人不会再收到一遍。
 
 ```mermaid
-flowchart LR
+flowchart TB
     M["100 个收件人"] --> T["Twilio"]
     T -- "接收 98 个" --> R["SmsResult<br/><small>100 个收件人</small>"]
     T -- "拒绝 2 个" --> V["Vonage"]

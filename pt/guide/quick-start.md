@@ -2,7 +2,7 @@
 
 <p class="lead">Um tour guiado pelas cinco coisas que você mais vai fazer: enviar, conferir o resultado, colocar na fila, notificar e testar.</p>
 
-## Envie uma mensagem
+## Envie uma mensagem {#send-a-message}
 
 ```php
 use MrRijal\LaravelSms\Facades\Sms;
@@ -14,7 +14,7 @@ Sms::to('+15551234567')
 
 Os números podem ter espaços, hífens, pontos e parênteses: `+1 (555) 123-4567` e `+15551234567` são o mesmo destinatário. Sempre que puder, use o formato internacional com o `+` na frente. A maioria dos provedores precisa dele para rotear a mensagem.
 
-## Veja o que aconteceu
+## Veja o que aconteceu {#check-what-happened}
 
 O `sendNow()` envia na hora e devolve um `SmsResult`:
 
@@ -39,7 +39,7 @@ try {
 
 Em [Resultados e erros](/pt/guide/results) você encontra as falhas parciais e o que cada propriedade guarda.
 
-## Coloque na fila
+## Coloque na fila {#queue-it}
 
 Enviar exige uma ida e volta pela rede. Dentro de uma requisição web, coloque a mensagem na fila para que seus usuários não fiquem esperando:
 
@@ -51,7 +51,7 @@ Sms::to($user->phone)
     ->sendLaterAt(now()->addDays(13));
 ```
 
-## Envie como notificação
+## Envie como notificação {#send-it-as-a-notification}
 
 Se você já usa as notificações do Laravel, adicione o canal `sms`:
 
@@ -74,7 +74,7 @@ class OrderShipped extends Notification
 
 O canal pede um número ao seu model pelo `routeNotificationForSms()`. Os detalhes estão em [Notificações](/pt/guide/notifications).
 
-## Teste
+## Teste {#test-it}
 
 ```php
 use MrRijal\LaravelSms\Facades\Sms;

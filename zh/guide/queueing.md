@@ -26,6 +26,18 @@ SMS_QUEUE_CONNECTION=redis
 SMS_QUEUE_NAME=sms
 ```
 
+在 Laravel 13 中，也可以改在 `AppServiceProvider` 里为扩展包的任务配置路由，和你的其他队列路由放在一起：
+
+```php
+use Illuminate\Support\Facades\Queue;
+use MrRijal\LaravelSms\Jobs\SendSmsJob;
+
+public function boot(): void
+{
+    Queue::route(SendSmsJob::class, connection: 'redis', queue: 'sms');
+}
+```
+
 单独用一个队列，大批量的营销短信就不会拖慢密码重置短信。为它启动一个 worker：
 
 ```bash
@@ -37,7 +49,7 @@ php artisan queue:work redis --queue=sms
 发给 500 人的短信会拆成 500 个小任务，而不是一个大任务。如果服务商拒绝了第 312 个号码，只有这个任务会失败并重试，其余 499 个收件人不会再收到第二遍。
 
 ```mermaid
-flowchart LR
+flowchart TB
     S["sendLater()<br/><small>500 个收件人</small>"] --> J1["任务 · +1555…0001"]
     S --> J2["任务 · +1555…0002"]
     S --> J3["任务 · +1555…0312"]

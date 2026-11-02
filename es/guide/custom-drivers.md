@@ -115,9 +115,10 @@ Si el proveedor informa de cada destinatario por separado, lanza una `DeliveryEx
 
 ## Registrar en tiempo de ejecución {#registering-at-runtime}
 
-Para drivers que necesitan dependencias del contenedor, registra una factory en un service provider:
+Para drivers que necesitan dependencias del contenedor, registra una factory en `AppServiceProvider`:
 
 ```php
+// app/Providers/AppServiceProvider.php
 use MrRijal\LaravelSms\Facades\Sms;
 
 public function boot(): void

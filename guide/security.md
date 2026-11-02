@@ -6,7 +6,7 @@
 
 **Credentials stay where you put them.** API keys and tokens are read from your configuration and sent only to their provider. They're never included in exception messages or URL query strings, and OAuth tokens are cached under a hashed key, so a cache dump doesn't reveal them.
 
-**Provider errors are bounded.** When a provider explains a rejection, the package keeps its message, cut to 200 characters, so failures are easy to debug. It never includes the raw response body. Those messages are logged when a send fails. A provider could echo back part of your request in its error, so treat SMS failure logs as sensitive.
+**Provider errors are bounded.** When a provider explains a rejection, the package keeps only that explanation, cut to 200 characters, so failures are easy to debug. The rest of the provider's response is never copied into the exception. Those messages are logged when a send fails. A provider could echo back part of your request in its error, so treat SMS failure logs as sensitive.
 
 **Phone numbers are redacted in logs.** The package's own log lines show `***4567`, never the full number.
 

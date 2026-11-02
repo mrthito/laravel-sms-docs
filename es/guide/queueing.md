@@ -26,6 +26,18 @@ SMS_QUEUE_CONNECTION=redis
 SMS_QUEUE_NAME=sms
 ```
 
+En Laravel 13 también puedes enrutar el job del paquete desde `AppServiceProvider`, junto al resto de tu enrutamiento de colas:
+
+```php
+use Illuminate\Support\Facades\Queue;
+use MrRijal\LaravelSms\Jobs\SendSmsJob;
+
+public function boot(): void
+{
+    Queue::route(SendSmsJob::class, connection: 'redis', queue: 'sms');
+}
+```
+
 Con una cola dedicada, un lote grande de mensajes de marketing no retrasa tus restablecimientos de contraseña. Pon un worker a procesarla:
 
 ```bash
@@ -37,7 +49,7 @@ php artisan queue:work redis --queue=sms
 Un mensaje para 500 personas se convierte en 500 jobs pequeños, no en uno grande. Si el proveedor rechaza el número 312, solo ese job falla y se reintenta; los otros 499 destinatarios no vuelven a recibir el mensaje.
 
 ```mermaid
-flowchart LR
+flowchart TB
     S["sendLater()<br/><small>500 destinatarios</small>"] --> J1["Job · +1555…0001"]
     S --> J2["Job · +1555…0002"]
     S --> J3["Job · +1555…0312"]

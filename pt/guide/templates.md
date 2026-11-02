@@ -2,7 +2,7 @@
 
 <p class="lead">Algumas mensagens não podem ser texto livre. Na Índia, todo SMS comercial precisa seguir um template registrado, e o WhatsApp só deixa empresas iniciarem uma conversa com um template aprovado. Esta página mostra como configurar e enviar templates.</p>
 
-## Quando você precisa de um template
+## Quando você precisa de um template {#when-you-need-a-template}
 
 | Situação | Por quê |
 |---|---|
@@ -12,7 +12,7 @@
 
 Templates são suportados pelo **[MSG91](/pt/providers/msg91)**, pelo **[WhatsApp](/pt/providers/whatsapp)** e pela **[Brevo](/pt/providers/brevo)**. Todos os outros provedores enviam texto.
 
-## Enviando um template
+## Enviando um template {#sending-a-template}
 
 Passe o ID do template e as variáveis dele:
 
@@ -27,7 +27,7 @@ Sms::provider('msg91')
 
 O ID e as variáveis têm significados um pouco diferentes em cada provedor.
 
-## Como cada provedor os interpreta
+## Como cada provedor os interpreta {#how-each-provider-reads-them}
 
 ### MSG91 {#msg91}
 
@@ -71,7 +71,7 @@ Sms::provider('brevo')
     ->send();
 ```
 
-## Templates com texto de reserva
+## Templates com texto de reserva {#templates-with-a-text-fallback}
 
 Uma mensagem pode levar um template **e** um texto simples. Provedores que aceitam templates enviam o template; todos os outros enviam o texto. Isso torna seguro combinar templates com [failover](/pt/guide/failover):
 
@@ -87,7 +87,7 @@ O MSG91 envia o template da DLT. Se ele estiver indisponível, a Twilio envia o 
 
 Uma mensagem só com template enviada para um provedor que só aceita texto lança uma `InvalidMessageException` com o nome do provedor, antes de qualquer envio. Em uma cadeia de failover, esse provedor simplesmente é pulado.
 
-## Tirando os IDs de template do seu código
+## Tirando os IDs de template do seu código {#keeping-template-ids-out-of-your-code}
 
 IDs de template são strings opacas e fáceis de digitar errado. Um backed enum dá a cada template um nome, autocompletar e um único lugar para alterá-lo:
 
@@ -111,7 +111,7 @@ Sms::to($user->phone)
 
 Se os IDs mudarem de um ambiente para outro, guarde-os no `config/services.php` e leia-os com `config('services.msg91.templates.login_code')`.
 
-## Templates em notificações
+## Templates em notificações {#templates-in-notifications}
 
 O `toSms()` pode devolver uma mensagem com template como qualquer outra:
 
@@ -137,7 +137,7 @@ $user->notify(new SmsNotification(
 ));
 ```
 
-## Testando mensagens com template
+## Testando mensagens com template {#testing-template-messages}
 
 O `Sms::fake()` registra o ID do template e as variáveis, então você pode fazer asserções sobre eles:
 

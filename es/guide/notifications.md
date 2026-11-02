@@ -40,7 +40,37 @@ public function toSms(object $notifiable): string
 }
 ```
 
-Para encolar las notificaciones SMS, implementa `ShouldQueue` en la notificación, igual que con cualquier notificación de Laravel.
+Para encolar las notificaciones SMS, implementa `ShouldQueue` en la notificación, igual que con cualquier notificación de Laravel. Laravel crea un job por cada notifiable y canal, así que el SMS y el correo se reintentan por separado.
+
+Manda los jobs de SMS a su propia cola con `viaQueues()`:
+
+```php
+public function viaQueues(): array
+{
+    return [
+        'mail' => 'default',
+        'sms' => 'sms',
+    ];
+}
+```
+
+En Laravel 13, los límites de reintentos se pueden declarar con atributos:
+
+```php
+use Illuminate\Queue\Attributes\Tries;
+
+#[Tries(3)]
+class OrderShipped extends Notification implements ShouldQueue
+{
+    // …
+}
+```
+
+Si la notificación se envía dentro de una transacción de base de datos, encadena `afterCommit()` para que el SMS nunca salga por un pedido cuya transacción se revirtió:
+
+```php
+$user->notify((new OrderShipped($order))->afterCommit());
+```
 
 ## Enrutar a un número de teléfono {#routing-to-a-phone-number}
 
@@ -99,7 +129,7 @@ class User extends Authenticatable
 {
     use HasSms, Notifiable;
 
-    public function routeNotificationForSms(): string
+    public function routeNotificationForSms(?Notification $notification = null): string
     {
         return $this->phone;
     }
@@ -109,4 +139,4 @@ $user->sms('Your order has shipped.');
 $user->smsTemplate('otp', ['code' => 4821]);
 ```
 
-Los dos envían de inmediato y devuelven el `SmsResult`.
+Los dos envían de inmediato y devuelven el `SmsResult`. Con el trait, deja el parámetro `$notification` como opcional, como en el ejemplo, para que el mismo método sirva tanto para las notificaciones como para los helpers.

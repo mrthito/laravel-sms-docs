@@ -1,6 +1,6 @@
 # Choosing a provider
 
-<p class="lead">Every provider works through the same API, so this choice is about price, reach and paperwork rather than code. You can change your mind later by editing one line in <code>.env</code>.</p>
+<p class="lead">Every provider works through the same API, so this choice is about price, reach and paperwork rather than code. Switching later means adding the new provider's credentials and changing <code>SMS_PROVIDER</code>; your code stays the same.</p>
 
 ## At a glance
 

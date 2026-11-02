@@ -28,7 +28,7 @@ MSG91_SENDER=
 Check the setup with a real message:
 
 ```bash
-php artisan sms:test +15551234567 --provider=msg91
+php artisan sms:test +919812345678 --provider=msg91
 ```
 
 ## Send
@@ -37,12 +37,12 @@ php artisan sms:test +15551234567 --provider=msg91
 use MrRijal\LaravelSms\Facades\Sms;
 
 Sms::provider('msg91')
-    ->to('+15551234567')
+    ->to('+919812345678')
     ->message('Your verification code is 4821.')
     ->send();
 ```
 
 ## Good to know
 
-- Indian regulations (DLT) require every commercial message to match a registered template. Create a Flow in MSG91, then send it with `->template($flowId, ['otp' => 4821])`. All recipients go in one request, each with the variables.
+- Indian regulations (DLT) require every commercial message to match a registered template. Create a Flow in MSG91, then send it with `->template($flowId, ['otp' => 4821])`. All recipients go in one request, and each receives the same variables.
 - Plain-text messages use MSG91's v2 API, one recipient per request, and only reach Indian numbers if the text matches a DLT template exactly.
