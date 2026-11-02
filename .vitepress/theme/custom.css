@@ -1,0 +1,211 @@
+/*
+ * Laravel SMS — documentation theme.
+ * A calm emerald palette, generous measure, and quiet surfaces so the code does the talking.
+ */
+
+:root {
+  --vp-c-brand-1: #0b7a5c;
+  --vp-c-brand-2: #0e9370;
+  --vp-c-brand-3: #10a37f;
+  --vp-c-brand-soft: rgba(16, 163, 127, 0.12);
+
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(118deg, #0b7a5c 10%, #14b8a6 90%);
+  --vp-home-hero-image-background-image: radial-gradient(circle at 50% 50%, rgba(52, 211, 153, 0.35), rgba(20, 184, 166, 0.05) 65%);
+  --vp-home-hero-image-filter: blur(56px);
+
+  --vp-c-tip-1: var(--vp-c-brand-1);
+  --vp-c-tip-soft: var(--vp-c-brand-soft);
+
+  --vp-font-family-base: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --vp-layout-max-width: 1380px;
+}
+
+.dark {
+  --vp-c-brand-1: #4ade9b;
+  --vp-c-brand-2: #34d399;
+  --vp-c-brand-3: #10b981;
+  --vp-c-brand-soft: rgba(52, 211, 153, 0.14);
+
+  --vp-c-bg: #0d1110;
+  --vp-c-bg-alt: #0a0d0c;
+  --vp-c-bg-soft: #141a18;
+  --vp-c-bg-elv: #141a18;
+  --vp-c-divider: #1f2725;
+  --vp-code-block-bg: #111715;
+
+  --vp-home-hero-name-background: linear-gradient(118deg, #4ade9b 10%, #2dd4bf 90%);
+}
+
+/* Reading rhythm */
+.vp-doc p,
+.vp-doc li {
+  line-height: 1.75;
+}
+
+.vp-doc h1 {
+  letter-spacing: -0.025em;
+  font-weight: 700;
+}
+
+.vp-doc h2 {
+  letter-spacing: -0.015em;
+  border-top: none;
+  margin-top: 56px;
+  padding-top: 0;
+}
+
+.vp-doc .lead {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--vp-c-text-2);
+  margin: 8px 0 32px;
+}
+
+/* Hero */
+.VPHero .name,
+.VPHero .text {
+  letter-spacing: -0.035em;
+}
+
+.VPHero .tagline {
+  max-width: 560px;
+  line-height: 1.6;
+}
+
+/* Feature cards: flatter, with a hairline that warms on hover */
+.VPFeature {
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.VPFeature:hover {
+  border-color: var(--vp-c-brand-2);
+  transform: translateY(-2px);
+}
+
+.VPFeature .title {
+  font-size: 15px;
+}
+
+.VPFeature .details {
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* Code */
+.vp-doc div[class*='language-'] {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+}
+
+.vp-doc :not(pre) > code {
+  font-size: 0.86em;
+}
+
+/* Tables read like specs, not spreadsheets */
+.vp-doc table {
+  display: table;
+  width: 100%;
+  font-size: 14px;
+}
+
+.vp-doc th {
+  background: transparent;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--vp-c-text-2);
+}
+
+.vp-doc tr:nth-child(2n) {
+  background: transparent;
+}
+
+.vp-doc td,
+.vp-doc th {
+  border-left: none;
+  border-right: none;
+}
+
+/* Home page extras */
+.home-section {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 72px 24px 0;
+}
+
+.home-section h2 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.home-section > p {
+  color: var(--vp-c-text-2);
+  max-width: 640px;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.provider-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.provider-cloud a {
+  padding: 8px 14px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.provider-cloud a:hover {
+  border-color: var(--vp-c-brand-2);
+  color: var(--vp-c-brand-1);
+}
+
+.home-code {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.home-code .caption {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--vp-c-text-2);
+  margin-bottom: 8px;
+}
+
+.home-code div[class*='language-'] {
+  margin: 0 !important;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+}
+
+.home-closing {
+  text-align: center;
+  padding-bottom: 96px;
+}
+
+.home-closing > p,
+.home-closing div[class*='language-'] {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.home-closing div[class*='language-'] {
+  max-width: 460px;
+  text-align: left;
+}
